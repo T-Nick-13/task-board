@@ -1,0 +1,23 @@
+:root {
+  --page-background: rgb(231 229 229);
+  --header-font-color: #bdc1c6;
+  --page-font-color: #343434;
+  --standart-transition: all 0.3s linear;
+  --content-width: 90%;
+  --header-height: 50px;
+}
+
+.page {
+  min-height: 100vh;
+  background-color: var(--page-background);
+  font-family: 'Century Gothic', Arial, Helvetica, Sans-serif;
+  color: var(--page-font-color);
+  display: flex;
+  justify-content: center;
+}
+
+.page__container {
+
+}
+
+
