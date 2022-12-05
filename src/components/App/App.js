@@ -8,10 +8,12 @@ import TaskList from '../TaskList/TaskList';
 import Task from '../Task/Task';
 import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
+import Project from '../Project/Project';
 
 function App() {
 
   const [activeTask, setActiveTask] = React.useState(false);
+  const [activeProject, setActiveProject] = React.useState(false);
   const [taskList, setTaskList] = React.useState([]);
   const [task, setTask] = React.useState();
   const [activePopupDel, setActivePopupDel] = React.useState(false);
@@ -42,21 +44,21 @@ function App() {
   function closePopup() {
     setActiveTask(false);
     setActivePopupDel(false);
+    setActiveProject(false);
   }
 
-  /**
-   * Открытие задачи по клику
-   * @param {object} task - открываемая задача
-  */
+  /**Открытие задачи по клику*/
   function openTask(task) {
     setActiveTask(true);
     setTask(task);
   }
 
-  /**
-   * Создание/обновление задачи
-   * @param {object} task - открытвая задача. Если параметр заполнен, задача обновляется. Если нет - создается ноавя
-  */
+    /**Открытие задачи по клику*/
+  function openProject() {
+    setActiveProject(true);
+  }
+
+  /**Создание/обновление задачи*/
   function createTask(taskData, fileData, fileLatName, task) {
 
     const data = new FormData();
@@ -165,12 +167,13 @@ function App() {
     <div className="page">
       <div className="page__container">
         <Header
-          onBtnClick={openTask}
+          openTask={openTask}
+          openProject={openProject}
         />
 
         <Routes>
 
-          <Route 
+          <Route
             path="/"
             element={
               <ProjectList />
@@ -196,6 +199,14 @@ function App() {
           onSubmit={deleteTask}
           onPopupClose={closePopup}
           task={task}
+        />
+
+        <Project
+          activeProject={activeProject}
+          onPopupClose={closePopup}
+          /* onSubmit={createTask} */
+          task={task}
+
         />
       </div>
     </div>

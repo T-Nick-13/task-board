@@ -9,7 +9,7 @@ function ProjectList(props) {
         <tr className="table__head-row">
           <th>Project</th>
           <th>Status</th>
-          <th>Start date</th>
+          <th>Finish date</th>
           <th>Tasks</th>
         </tr>
       </thead>
@@ -26,7 +26,7 @@ function ProjectList(props) {
           )
         })} */}
         <tr className="table__row">
-          <td>проект 1</td>
+          <td title="открыть проект">проект 1</td>
           <td>активен</td>
           <td>05.12.22</td>
           <td>5-10</td>
