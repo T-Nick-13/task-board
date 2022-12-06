@@ -14,7 +14,7 @@ function Project(props) {
     title: '',
     description: '',
     term: dayjs(),
-    status: '',
+    status: 'Active',
     fileName: ''
   })
 
@@ -38,7 +38,7 @@ function Project(props) {
       } else alert(`Размер файла должен быть до 5мб. Текущий размер ${file.size}`);
   }
 
-  /**Проверка загружаемого файла на ограничения по размеру*/
+  /**Очистка полей формы*/
   function clearInputs() {
     if (props.task) {
       setTaskData({
@@ -54,7 +54,7 @@ function Project(props) {
         title: '',
         description: '',
         term: dayjs(),
-        status: '',
+        status: 'Active',
       })
       setFileData('');
       setFileName('');
@@ -87,6 +87,7 @@ function Project(props) {
     e.preventDefault();
     props.onSubmit(taskData, fileData, fileLatName, props.task);
     clearInputs();
+    debugger
   }
 
   /**Перевод названия файла в транслит для корректного сохранения на сервере*/

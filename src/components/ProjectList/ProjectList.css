@@ -89,7 +89,8 @@
   width: 50%;
   height: 100%;
   background: rgb(41 184 36);
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .table__progress span {

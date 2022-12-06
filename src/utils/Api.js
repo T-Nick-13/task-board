@@ -3,15 +3,6 @@ export default class Api {
     this._url = baseUrl;
   }
 
-  getHeaders() {
-   const token = localStorage.getItem('token');
-    return {
-      ...this.headers,
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    }
-  }
-
   _checkServerResponse(res) {
     if (res.ok) {
       return res.json()
@@ -20,7 +11,7 @@ export default class Api {
   }
 
   getTasks() {
-    return fetch(`${this._url}`, {
+    return fetch(`${this._url}/tasks`, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -29,7 +20,7 @@ export default class Api {
   }
 
   createTask(data) {
-    return fetch(`${this._url}`, {
+    return fetch(`${this._url}/tasks`, {
       method: 'POST',
       body: data
     })
@@ -37,7 +28,7 @@ export default class Api {
   }
 
   deleteTask(taskId) {
-    return fetch(`${this._url}/${taskId}`, {
+    return fetch(`${this._url}/${taskId}/tasks`, {
       method: 'DELETE'
     })
     .then(this._checkServerResponse);
@@ -52,7 +43,7 @@ export default class Api {
   }
 
   editField(data, taskId) {
-    return fetch(`${this._url}/${taskId}`, {
+    return fetch(`${this._url}/${taskId}/tasks`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -62,6 +53,25 @@ export default class Api {
     })
     .then(this._checkServerResponse);
   }
+
+  getProjects() {
+    return fetch(`${this._url}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
+
+  createProject(data) {
+    return fetch(`${this._url}`, {
+      method: 'POST',
+      body: data
+    })
+    .then(this._checkServerResponse);
+  }
+
+
 
 
 

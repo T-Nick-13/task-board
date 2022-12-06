@@ -1,11 +1,11 @@
-const router = require('express').Router();
+const taskRouter = require('express').Router();
 const { createTask, getTasks, deleteTask, editTask, editField } = require('../controllers/tasks');
 const upload = require('../middlewares/upload');
 
-router.post('/', upload, createTask);
-router.get('/', getTasks);
-router.delete('/:taskId', deleteTask);
-router.post('/_method=PUT', upload, editTask);
-router.post('/:taskId', editField);
+taskRouter.post('/', upload, createTask);
+taskRouter.get('/', getTasks);
+taskRouter.delete('/:taskId', deleteTask);
+taskRouter.post('/_method=PUT', upload, editTask);
+taskRouter.post('/:taskId', editField);
 
-module.exports = router;
+module.exports = taskRouter;

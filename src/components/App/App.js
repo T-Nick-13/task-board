@@ -15,6 +15,7 @@ function App() {
   const [activeTask, setActiveTask] = React.useState(false);
   const [activeProject, setActiveProject] = React.useState(false);
   const [taskList, setTaskList] = React.useState([]);
+  const [projectList, setProjectList] = React.useState([]);
   const [task, setTask] = React.useState();
   const [activePopupDel, setActivePopupDel] = React.useState(false);
 
@@ -25,11 +26,14 @@ function App() {
   /**Получение списка задач с сервера */
   function getData() {
     Promise.all([
-      api.getTasks()
+      api.getTasks(),
+      api.getProjects()
     ])
-    .then(([tasks]) => {
+    .then(([tasks, projects]) => {
       localStorage.setItem('tasks', JSON.stringify(tasks));
       setTaskList(JSON.parse(localStorage.getItem('tasks')));
+      localStorage.setItem('projects', JSON.stringify(projects));
+      setProjectList(JSON.parse(localStorage.getItem('projects')));
     })
     .catch((err) => {
       console.log(err);
@@ -163,6 +167,49 @@ function App() {
       })
   }
 
+  function createProject(taskData, fileData, fileLatName, task) {
+    const projectNumber = 'pr-' + (projectList.length + 1);
+    const data = new FormData();
+
+    data.append('title', taskData.title);
+    data.append('description', taskData.description);
+    if (fileData) {
+      data.append('fileData', fileData, fileLatName);
+    }
+    data.append('term', taskData.term);
+    data.append('status', taskData.status);
+
+    if (task) {
+      data.append('id', task._id);
+      data.append('file', task.file);
+      data.append('fileName', task.fileName);
+    }
+
+    data.append('number', projectNumber);
+
+    if (task) {
+      /* api.editTask(data)
+        .then(() => {
+          getData();
+          closePopup();
+        })
+        .catch((err) => {
+          console.log(err)
+        }) */
+        console.log('jj')
+    } else {
+      api.createProject(data)
+        .then(() => {
+          getData();
+          closePopup();
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
+  }
+
   return (
     <div className="page">
       <div className="page__container">
@@ -176,7 +223,9 @@ function App() {
           <Route
             path="/"
             element={
-              <ProjectList />
+              <ProjectList
+                projects={projectList}
+              />
             }
           />
 
@@ -204,7 +253,7 @@ function App() {
         <Project
           activeProject={activeProject}
           onPopupClose={closePopup}
-          /* onSubmit={createTask} */
+          onSubmit={createProject}
           task={task}
 
         />

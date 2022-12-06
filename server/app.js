@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require('./routes/tasks');
+const taskRouter = require('./routes/tasks');
+const projectRouter = require('./routes/projects');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const limiter = require('./utils/limiter');
 const path = require('path');
 
-const { PORT = 3005 } = process.env;
+const { PORT = 3006 } = process.env;
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/todo', {
@@ -21,7 +22,8 @@ app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
 
-app.use('/', router);
+app.use('/tasks', taskRouter);//??
+app.use('/', projectRouter);
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
