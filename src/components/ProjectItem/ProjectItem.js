@@ -6,7 +6,7 @@ function ProjectItem(props) {
 
   return (
     <tr className="table__row">
-      <td>{props.title}</td>
+      <td><Link to={`/${props.number}`}>{props.title}</Link></td>
       <td><span className="table__status">{props.status}</span></td>
       <td>{dayjs(props.term).format('DD.MM.YY')}</td>
       <td>

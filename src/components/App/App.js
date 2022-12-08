@@ -9,6 +9,7 @@ import Task from '../Task/Task';
 import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
 import Project from '../Project/Project';
+import Test from '../TaskList/Test';
 
 function App() {
 
@@ -63,7 +64,7 @@ function App() {
   }
 
   /**Создание/обновление задачи*/
-  function createTask(taskData, fileData, fileLatName, task) {
+  function createTask(taskData, fileData, fileLatName, task, projectId) {
 
     const data = new FormData();
     data.append('title', taskData.title);
@@ -73,6 +74,7 @@ function App() {
     }
     data.append('term', taskData.term);
     data.append('status', taskData.status);
+    data.append('projectId', projectId);
     if (task) {
       data.append('id', task._id);
       data.append('file', task.file);
@@ -229,6 +231,14 @@ function App() {
             }
           />
 
+          <Route
+            path="/:id"
+            element={
+              <Test
+              />
+            }
+          />
+
         </Routes>
         {/* <TaskList
           openTask={openTask}
@@ -236,13 +246,13 @@ function App() {
           openPopupDel={openPopupDel}
           completeTask={completeTask}
           editTaskField={editTaskField}
-        />
+        /> */}
         <Task
           activeTask={activeTask}
           onPopupClose={closePopup}
           onSubmit={createTask}
           task={task}
-        /> */}
+        />
         <PopupDel
           activePopupDel={activePopupDel}
           onSubmit={deleteTask}

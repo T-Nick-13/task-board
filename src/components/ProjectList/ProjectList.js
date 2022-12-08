@@ -22,6 +22,7 @@ function ProjectList(props) {
               title={i.title}
               term={i.term}
               status={i.status}
+              number={i.number}
             />
           )
         })}

@@ -3,6 +3,7 @@ import taskLogo from '../../images/icons8-список-задач-50.png';
 import desckLogo from '../../images/icons8-содержание-24.png';
 import uploadLogo from '../../images/icons8-загрузить-32.png';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
 
 
 function Task(props) {
@@ -17,6 +18,8 @@ function Task(props) {
     status: '',
     fileName: ''
   })
+
+  const projectId = useLocation().pathname.slice(1);
 
   /**Сброс заполненных и не сохраненных полей при изменении задачи*/
   React.useEffect(() => {
@@ -85,7 +88,7 @@ function Task(props) {
   /**Сохранений изменений в задаче*/
   function submitSave(e) {
     e.preventDefault();
-    props.onSubmit(taskData, fileData, fileLatName, props.task);
+    props.onSubmit(taskData, fileData, fileLatName, props.task, projectId);
     clearInputs();
   }
 

@@ -132,6 +132,70 @@
   opacity: 1;
 }
 
+.dnd {
+  display: flex;
+  align-items: baseline;
+  margin-top: 70px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dnd__container {
+  padding: 10px 0 10px;
+  width: 280px;
+  min-height: 120px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dnd__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.dnd__column > h2 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.dnd__task {
+  user-select: none;
+  margin: 0 0 8px 0;
+  color: rgb(36, 36, 36);
+  min-height: 50px;
+  width: 85%;
+  border-radius: 7px;
+  padding: 5px;
+  box-shadow: 0px 0px 3px 1px #7e7e7e70;
+  background-color: #ffffff5e;
+}
+
+.dnd__btn {
+  background: transparent;
+  margin: 0 0 10px 0;
+}
+
+.dnd__btn:hover {
+  opacity: 0.5;
+  background-color: transparent;
+}
+
+.dnd__btn svg line {
+  stroke-width: 10px;
+  stroke: #535252;
+}
+
+.dnd__btn span {
+  color: #535252;
+  display: block;
+}
+
 @media (max-width: 780px) {
   .task-list__title {
     font-size: 14px;

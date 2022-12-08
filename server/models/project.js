@@ -25,7 +25,7 @@ const projectSchema = new mongoose.Schema({
   filePath: {
     type: String,
   },
-  number: {
+  projectId: {
     type: String,
   }
 });
