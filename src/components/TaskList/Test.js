@@ -1,71 +1,73 @@
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { v4 as uuidv4 } from 'uuid';
+import { useLocation } from 'react-router-dom';
 
-const itemsFromBackend = [
-  { id: uuidv4(), content: "First task" },
-  { id: uuidv4(), content: "Second task" },
-  { id: uuidv4(), content: "Third task" },
-  { id: uuidv4(), content: "Fourth task" },
-  { id: uuidv4(), content: "Fifth task" }
-];
+function Test(props) {
 
-const columnsFromBackend = {
-  [uuidv4()]: {
-    name: "Queue",
-    items: itemsFromBackend
-  },
-  [uuidv4()]: {
-    name: "Development",
-    items: []
-  },
-  [uuidv4()]: {
-    name: "Done",
-    items: []
+  const project = useLocation().pathname.slice(1);
+  const taskList = JSON.parse(localStorage.getItem('tasks')).filter((i) => i.projectId === project);
+
+  function testy() {
+    //console.log(filterTest)
+    //console.log(project)
+    //console.log(taskList)
   }
-};
 
-const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
+  const columnsFromBackend = {
+    Queue: {
+      name: "Queue",
+      items: taskList.filter((i) => i.status === "Queue")
+    },
+    Development: {
+      name: "Development",
+      items: taskList.filter((i) => i.status === "Development")
+    },
+    Done: {
+      name: "Done",
+      items: taskList.filter((i) => i.status === "Done")
+    }
+  };
 
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems
-      }
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems
-      }
-    });
-  }
-};
+  const onDragEnd = (result, columns, setColumns) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
 
-function Test() {
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          items: destItems
+        }
+      });
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems
+        }
+      });
+    }
+  };
   const [columns, setColumns] = useState(columnsFromBackend);
+
   return (
-    <main className="dnd">
+    <main className="dnd" onClick={testy}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
@@ -104,8 +106,8 @@ function Test() {
                         {column.items.map((item, index) => {
                           return (
                             <Draggable
-                              key={item.id}
-                              draggableId={item.id}
+                              key=/* {item.id} */{item._id}
+                              draggableId=/* {item.id} */{item.status}
                               index={index}
                             >
                               {(provided, snapshot) => {
@@ -122,7 +124,8 @@ function Test() {
                                     }}
                                     className="dnd__task"
                                   >
-                                    {item.content}
+                                    {item.title}
+
                                   </div>
                                 );
                               }}

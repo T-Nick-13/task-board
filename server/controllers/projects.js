@@ -15,9 +15,9 @@ const createProject = (req, res) => {
   const file = (req.files.length > 0) ? /* 'https://api.todo.netitov.ru/' */ 'http://localhost:3005/' + 'files/' + req.files[0].filename : '';
   const fileName = (req.files.length > 0) ? req.files[0].originalname : '';
   const filePath = (req.files.length > 0) ? 'public/files/' + req.files[0].filename: '';
-  const { title, description, term, status, number  } = req.body;
+  const { title, description, term, status, projectId  } = req.body;
 
-  Project.create({ title, description, file, term, status, fileName, filePath, number })
+  Project.create({ title, description, file, term, status, fileName, filePath, projectId })
     .then((card) => res.send(card))
     .catch((err) => {
       throw err;

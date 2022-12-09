@@ -10,6 +10,7 @@ import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
 import Project from '../Project/Project';
 import Test from '../TaskList/Test';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   const [taskList, setTaskList] = React.useState([]);
   const [projectList, setProjectList] = React.useState([]);
   const [task, setTask] = React.useState();
+  const [project, setProject] = React.useState();
   const [activePopupDel, setActivePopupDel] = React.useState(false);
 
   const api = new Api ({
@@ -58,9 +60,15 @@ function App() {
     setTask(task);
   }
 
-    /**Открытие задачи по клику*/
+  /**Открытие попап для создания нового проекта*/
   function openProject() {
     setActiveProject(true);
+
+  }
+
+  /**Открытие списка задач по проекту*/
+  function openTaskBoard(project) {
+    setProject(project);
   }
 
   /**Создание/обновление задачи*/
@@ -170,7 +178,7 @@ function App() {
   }
 
   function createProject(taskData, fileData, fileLatName, task) {
-    const projectNumber = 'pr-' + (projectList.length + 1);
+    const projectId = 'pr-' + (projectList.length + 1);
     const data = new FormData();
 
     data.append('title', taskData.title);
@@ -187,7 +195,7 @@ function App() {
       data.append('fileName', task.fileName);
     }
 
-    data.append('number', projectNumber);
+    data.append('projectId', uuidv4());
 
     if (task) {
       /* api.editTask(data)
@@ -227,6 +235,7 @@ function App() {
             element={
               <ProjectList
                 projects={projectList}
+                onProjectClick={openTaskBoard}
               />
             }
           />
@@ -235,6 +244,7 @@ function App() {
             path="/:id"
             element={
               <Test
+                taskList={taskList}
               />
             }
           />

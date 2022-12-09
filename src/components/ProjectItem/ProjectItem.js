@@ -4,9 +4,13 @@ import dayjs from 'dayjs';
 
 function ProjectItem(props) {
 
+  function openTaskBoard() {
+    props.onProjectClick(props.project);
+  }
+
   return (
     <tr className="table__row">
-      <td><Link to={`/${props.number}`}>{props.title}</Link></td>
+      <td><Link to={`/${props.projectId}`} onClick={openTaskBoard}>{props.title}</Link></td>
       <td><span className="table__status">{props.status}</span></td>
       <td>{dayjs(props.term).format('DD.MM.YY')}</td>
       <td>

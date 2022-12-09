@@ -22,7 +22,9 @@ function ProjectList(props) {
               title={i.title}
               term={i.term}
               status={i.status}
-              number={i.number}
+              projectId={i.projectId}
+              project={i}
+              onProjectClick={props.onProjectClick}
             />
           )
         })}

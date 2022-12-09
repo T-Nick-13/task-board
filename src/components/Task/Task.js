@@ -15,7 +15,7 @@ function Task(props) {
     title: '',
     description: '',
     term: dayjs(),
-    status: '',
+    status: 'Queue',
     fileName: ''
   })
 
@@ -28,8 +28,8 @@ function Task(props) {
 
   const activeTask = props.activeTask ? 'popup popup_active' : 'popup';
   const activeForm = props.activeTask ? 'popup__form popup__form_active' : 'popup__form';
-  const statusClass = (taskData.status === 'В работе') ? 'task-list__status task-list__status_pending' :
-    (taskData.status === 'Выполнено') ? 'task-list__status task-list__status_complete' : 'task-list__status';
+  const statusClass = (taskData.status === 'Development') ? 'task-list__status task-list__status_pending' :
+    (taskData.status === 'Done') ? 'task-list__status task-list__status_complete' : 'task-list__status';
 
   /**Проверка загружаемого файла на ограничения по размеру*/
   function checkFileType(file) {
@@ -41,7 +41,7 @@ function Task(props) {
       } else alert(`Размер файла должен быть до 5мб. Текущий размер ${file.size}`);
   }
 
-  /**Проверка загружаемого файла на ограничения по размеру*/
+  /**Очистка инпутов*/
   function clearInputs() {
     if (props.task) {
       setTaskData({
@@ -57,7 +57,7 @@ function Task(props) {
         title: '',
         description: '',
         term: dayjs(),
-        status: '',
+        status: 'Queue',
       })
       setFileData('');
       setFileName('');
@@ -154,9 +154,9 @@ function Task(props) {
 
             <select className={statusClass} onChange={handleChange}
               name="status" value={taskData.status}>
-              <option value="Ожидание">Ожидание</option>
-              <option value="В работе">В работе</option>
-              <option value="Выполнено">Выполнено</option>
+              <option value="Queue">Queue</option>
+              <option value="Development">Development</option>
+              <option value="Done">Done</option>
             </select>
           </div>
         </div>
