@@ -87,7 +87,6 @@ function Project(props) {
     e.preventDefault();
     props.onSubmit(taskData, fileData, fileLatName, props.task);
     clearInputs();
-    debugger
   }
 
   /**Перевод названия файла в транслит для корректного сохранения на сервере*/

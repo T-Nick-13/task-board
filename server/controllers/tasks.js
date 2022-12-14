@@ -12,7 +12,7 @@ const getTasks = (req, res, next) => {
 }
 
 const createTask = (req, res) => {
-  const file = (req.files.length > 0) ? 'https://api.todo.netitov.ru/' + 'files/' + req.files[0].filename : '';
+  const file = (req.files.length > 0) ? /*'https://api.todo.netitov.ru/' */'http://localhost:3005/' + 'files/' + req.files[0].filename : '';
   const fileName = (req.files.length > 0) ? req.files[0].originalname : '';
   const filePath = (req.files.length > 0) ? 'public/files/' + req.files[0].filename: '';
   const { title, description, term, status, projectId  } = req.body;
@@ -53,7 +53,7 @@ const deleteTask = (req, res, next) => {
 
 const editTask = (req, res, next) => {
   const { title, description, term, status, id } = req.body;
-  const file = (req.files.length > 0) ? 'https://api.todo.netitov.ru/' + 'files/' + req.files[0].filename : req.body.file;
+  const file = (req.files.length > 0) ? /*'https://api.todo.netitov.ru/' */'http://localhost:3005/' + 'files/' + req.files[0].filename : req.body.file;
   const fileName = (req.files.length > 0) ? req.files[0].originalname : req.body.fileName;
   const filePath = (req.files.length > 0) ? 'public/files' + req.files[0].filename: '';
 
@@ -107,7 +107,43 @@ const editField = (req, res, next) => {
     .catch(next);
 };
 
+const editTaskOnBoard = (req, res, next) => {
+
+  const tasks = req.body.map((i) => {
+    return i._id;
+  })
+
+
+  req.body.forEach((task) => {
+
+  Task.findByIdAndUpdate(
+    task._id,
+    { $set:{'status' : task.status}},
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((u) => {
+      if (!u) {
+        throw new NotFound('Задача не найдена');
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        throw new BadRequest('Введены некорректные данные');
+      }
+      throw err;
+    })
+    .catch(next);
+
+  })
+  res.send(JSON.stringify({tasks}))
+
+
+};
+
 
 module.exports = {
-  createTask, getTasks, deleteTask, editTask, editField
+  createTask, getTasks, deleteTask, editTask, editField, editTaskOnBoard
 };

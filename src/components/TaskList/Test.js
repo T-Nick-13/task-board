@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useLocation } from 'react-router-dom';
+import TaskListItem from "../TaskListItem/TaskListItem";
 
 function Test(props) {
-
   const project = useLocation().pathname.slice(1);
-  const taskList = JSON.parse(localStorage.getItem('tasks')).filter((i) => i.projectId === project);
+  const newTask = JSON.parse(localStorage.getItem('newTasks')) ? JSON.parse(localStorage.getItem('newTasks')) : [];
+  const allTask = JSON.parse(localStorage.getItem('tasks'));
+  const projecty = newTask.filter((i) => i.projectId === project).length > 0 ? newTask : allTask;
+  const taskList = projecty.filter((i) => i.projectId === project);
 
-  function testy() {
-    //console.log(filterTest)
-    //console.log(project)
-    //console.log(taskList)
+  function presetTasks() {
+    let arr = [];
+    Object.entries(columns).forEach((i) => {
+      i[1].items.forEach((t) => {
+        t.status = i[0];
+        arr.push(t);
+      })
+    })
+    let result = [...arr].reduce((a, c) => (a.map(e=>e._id).includes(c._id) || a.push(c), a), []);
+    localStorage.setItem('newTasks', JSON.stringify(result));
   }
 
   const columnsFromBackend = {
@@ -27,6 +36,8 @@ function Test(props) {
       items: taskList.filter((i) => i.status === "Done")
     }
   };
+
+  const [columns, setColumns] = useState(columnsFromBackend);
 
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -64,10 +75,25 @@ function Test(props) {
       });
     }
   };
-  const [columns, setColumns] = useState(columnsFromBackend);
+
+  React.useEffect(() => {
+    props.editTaskOnBoard(JSON.parse(localStorage.getItem('newTasks')));
+    debugger
+    //localStorage.removeItem('newTasks');
+  }, [])
+
+  function test2() {
+    props.editTaskOnBoard(JSON.parse(localStorage.getItem('newTasks')));
+    localStorage.removeItem('newTasks');
+  }
+
+  React.useEffect(() => {
+    presetTasks();
+  }, [columns])
+
 
   return (
-    <main className="dnd" onClick={testy}>
+    <main className="dnd" onDoubleClick={test2}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
@@ -77,7 +103,7 @@ function Test(props) {
               className="dnd__column"
               key={columnId}
             >
-              <h2>{column.name}</h2>
+              <h2 /* onClick={test2} */>{column.name}</h2>
               <div>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
@@ -107,7 +133,7 @@ function Test(props) {
                           return (
                             <Draggable
                               key=/* {item.id} */{item._id}
-                              draggableId=/* {item.id} */{item.status}
+                              draggableId=/* {item.id} */{item._id}
                               index={index}
                             >
                               {(provided, snapshot) => {
@@ -124,8 +150,11 @@ function Test(props) {
                                     }}
                                     className="dnd__task"
                                   >
-                                    {item.title}
+                                    {/* {item.title} */}
 
+                                    <TaskListItem
+                                      task={item}
+                                    />
                                   </div>
                                 );
                               }}

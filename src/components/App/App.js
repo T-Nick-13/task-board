@@ -18,8 +18,8 @@ function App() {
   const [activeProject, setActiveProject] = React.useState(false);
   const [taskList, setTaskList] = React.useState([]);
   const [projectList, setProjectList] = React.useState([]);
-  const [task, setTask] = React.useState();
   const [project, setProject] = React.useState();
+  const [task, setTask] = React.useState();
   const [activePopupDel, setActivePopupDel] = React.useState(false);
 
   const api = new Api ({
@@ -159,7 +159,7 @@ function App() {
   }
 
   /**Редактирование задачи без ее открытия (через кнопке в общем списке задач)*/
-  function editTaskField(taskData, task) {
+  /* function editTaskField(taskData, task) {
     const status = taskData.status === undefined ? task.status : taskData.status;
     const term = taskData.term === undefined ? task.term : taskData.term;
     let newObj = {};
@@ -175,7 +175,17 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
-  }
+  } */
+
+  function editTaskOnBoard(data) {
+    api.editTaskOnBoard(data)
+      .then(() => {
+        getData();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
 
   function createProject(taskData, fileData, fileLatName, task) {
     const projectId = 'pr-' + (projectList.length + 1);
@@ -244,7 +254,9 @@ function App() {
             path="/:id"
             element={
               <Test
-                taskList={taskList}
+                //taskList={taskList}
+                editTaskOnBoard={editTaskOnBoard}
+                //getData={getData}
               />
             }
           />

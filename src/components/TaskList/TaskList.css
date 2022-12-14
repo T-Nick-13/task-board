@@ -10,9 +10,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: var(--content-width);
+  width: 97%;
   max-width: 700px;
-  border-bottom: 1px solid var(--header-font-color);
+  cursor: pointer;
 }
 
 .task-list__container {
@@ -25,8 +25,7 @@
 
 .task-list__title {
   font-weight: normal;
-  font-size: 17px;
-  cursor: pointer;
+  font-size: 15px;
 }
 
 .task-list__title_complete {
@@ -67,14 +66,14 @@
 }
 
 .task-list__term {
-  background: #c2c2c2;
+  background: #c2c2c26b;
   border-radius: 7px;
   padding: 3px;
-  font-size: 14px;
+  font-size: 13px;
   border: none;
-  width: 105px;
   outline: none;
   box-sizing: border-box;
+  color: #535252;
   transition: var(--standart-transition);
 }
 
@@ -174,6 +173,8 @@
   padding: 5px;
   box-shadow: 0px 0px 3px 1px #7e7e7e70;
   background-color: #ffffff5e;
+  display: flex;
+  justify-content: center;
 }
 
 .dnd__btn {
@@ -201,7 +202,7 @@
     font-size: 14px;
   }
 
-  .task-list__term {
+  /* .task-list__term {
     font-size: 13px;
     width: 95px;
   }
@@ -209,11 +210,11 @@
   .task-list__status {
     font-size: 13px;
     width: 100px;
-  }
+  } */
 
-  .task-list__tools img {
+  /* .task-list__tools img {
     width: 20px;
-  }
+  } */
 }
 
 @media (max-width: 580px) {

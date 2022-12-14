@@ -81,8 +81,10 @@ const editProject = (req, res, next) => {
 };
 
 const editField = (req, res, next) => {
+  debugger
   const { term, status } = req.body;
-  const { taskId } = req.params;
+  const { taskId } = req.body;
+  debugger
 
   Project.findByIdAndUpdate(
     taskId,

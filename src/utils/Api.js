@@ -35,7 +35,7 @@ export default class Api {
   }
 
   editTask(data) {
-    return fetch(`${this._url}/_method=PUT`, {
+    return fetch(`${this._url}/tasks/_method=PUT`, {
       method: 'POST',
       body: data
     })
@@ -50,6 +50,17 @@ export default class Api {
         'Content-Type': 'application/json'
       }
 
+    })
+    .then(this._checkServerResponse);
+  }
+
+  editTaskOnBoard(data) {
+    return fetch(`${this._url}/tasks/board`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then(this._checkServerResponse);
   }

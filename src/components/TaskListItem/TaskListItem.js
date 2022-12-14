@@ -57,30 +57,32 @@ function TaskListItem(props) {
     'task-list__title';
 
   return (
-    <li className="task-list__item">
-      <div className="task-list__container" onClick={openTask} title="открыть задачу" >
+    <div className="task-list__item" onClick={openTask}  title="открыть задачу">
+      <div className="task-list__container">
 
-        <button className="task-list__btn" title="выполнить" onClick={completeTask}>
+        {/* <button className="task-list__btn" title="выполнить" onClick={completeTask}>
           <img src={completeLogo} alt="complete" className={completeClass}></img>
-        </button>
+        </button> */}
 
-        <h3 className={titleClass}>{props.title}</h3>
+        <h3 className={titleClass}>{props.task.title}</h3>
       </div>
 
-      <div className="task-list__tools">
+      {/* <div className="task-list__tools">
         <img src={editLogo} alt="edit" title="редактировать" onClick={openTask}></img>
         <img src={deletetLogo} alt="delete" title="удалить" onClick={openPopupDel}></img>
-      </div>
+      </div> */}
 
-      <input type="date" className="task__term task-list__term" id="term" name="term"
-        value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange}/>
+      {/* <input type="date" className="task__term task-list__term" id="term" name="term"
+        value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange}/> */}
 
-      <select className={`${statusClass} task-list__status-list`} name="status" value={taskData.status} onChange={handleChange}>
+      <div className="task__term task-list__term">{dayjs(props.task.term).format('DD.MM.YY')}</div>
+
+      {/* <select className={`${statusClass} task-list__status-list`} name="status" value={taskData.status} onChange={handleChange}>
         <option value="Ожидание">Ожидание</option>
         <option value="В работе">В работе</option>
         <option value="Выполнено">Выполнено</option>
-      </select>
-    </li>
+      </select> */}
+    </div>
   );
 }
 
