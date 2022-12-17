@@ -9,7 +9,7 @@ function Header(props) {
     if (title === 'New project') {
       props.openProject();
     } else {
-      props.openTask();
+      props.openNewTask();
     }
   }
 

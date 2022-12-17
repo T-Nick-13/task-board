@@ -3,18 +3,17 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useLocation } from 'react-router-dom';
 import TaskListItem from "../TaskListItem/TaskListItem";
 
-function Test(props) {
+function TaskBoard(props) {
   const project = useLocation().pathname.slice(1);
-  const newTask = JSON.parse(localStorage.getItem('newTasks')) ? JSON.parse(localStorage.getItem('newTasks')) : [];
-  const allTask = JSON.parse(localStorage.getItem('tasks'));
-  const projecty = newTask.filter((i) => i.projectId === project).length > 0 ? newTask : allTask;
-  const taskList = projecty.filter((i) => i.projectId === project);
+  const initialTasks = JSON.parse(localStorage.getItem('tasks'));
+  const [taskList, setTaskList] = useState(initialTasks.filter((i) => i.projectId === project))
 
   function presetTasks() {
     let arr = [];
     Object.entries(columns).forEach((i) => {
       i[1].items.forEach((t) => {
         t.status = i[0];
+        t.index = i[1].items.indexOf(t);
         arr.push(t);
       })
     })
@@ -76,24 +75,45 @@ function Test(props) {
     }
   };
 
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     props.editTaskOnBoard(JSON.parse(localStorage.getItem('newTasks')));
-    debugger
-    //localStorage.removeItem('newTasks');
-  }, [])
+  }, []) */
 
-  function test2() {
-    props.editTaskOnBoard(JSON.parse(localStorage.getItem('newTasks')));
-    localStorage.removeItem('newTasks');
-  }
+  React.useEffect(() => {
+    const newTasks = JSON.parse(localStorage.getItem('newTasks')).filter((i) => i.projectId === project);
+    setTaskList(newTasks);
+    const columnsFromBackend = {
+      Queue: {
+        name: "Queue",
+        items: newTasks.filter((i) => i.status === "Queue")
+      },
+      Development: {
+        name: "Development",
+        items: newTasks.filter((i) => i.status === "Development")
+      },
+      Done: {
+        name: "Done",
+        items: newTasks.filter((i) => i.status === "Done")
+      }
+    };
+    setColumns(columnsFromBackend);
+  }, [props.taskList])
 
   React.useEffect(() => {
     presetTasks();
+
   }, [columns])
 
+  function onTaskClick(task) {
+    props.openTask(task);
+  }
+
+  function onNewTaskClick(e) {
+    props.openNewTask(e.currentTarget.dataset.status);
+  }
 
   return (
-    <main className="dnd" onDoubleClick={test2}>
+    <main className="dnd">
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
@@ -103,7 +123,7 @@ function Test(props) {
               className="dnd__column"
               key={columnId}
             >
-              <h2 /* onClick={test2} */>{column.name}</h2>
+              <h2>{column.name}</h2>
               <div>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
@@ -114,7 +134,6 @@ function Test(props) {
                         style={{
                           background: snapshot.isDraggingOver
                             ? "#b7b7b7"
-                            /* : "lightgrey", */
                             : column.name === "Done" ? "rgb(93 186 2 / 25%)"
                             : column.name === "Development" ? "rgb(234 198 13 / 30%)"
                             : "#d5d5d5"
@@ -122,7 +141,7 @@ function Test(props) {
                         }}
                         className="dnd__container"
                       >
-                        <button className="header__btn btn-cross dnd__btn" type="button" /* onClick={openPopup} */>
+                        <button className="header__btn btn-cross dnd__btn" type="button" data-status={column.name} onClick={onNewTaskClick}>
                           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <line x1="0" x2="100" y1="0" y2="100" />
                             <line x1="0" x2="100" y1="100" y2="0" />
@@ -132,8 +151,8 @@ function Test(props) {
                         {column.items.map((item, index) => {
                           return (
                             <Draggable
-                              key=/* {item.id} */{item._id}
-                              draggableId=/* {item.id} */{item._id}
+                              key={item._id}
+                              draggableId={item._id}
                               index={index}
                             >
                               {(provided, snapshot) => {
@@ -150,10 +169,9 @@ function Test(props) {
                                     }}
                                     className="dnd__task"
                                   >
-                                    {/* {item.title} */}
-
                                     <TaskListItem
                                       task={item}
+                                      onTaskClick={onTaskClick}
                                     />
                                   </div>
                                 );
@@ -179,4 +197,4 @@ function Test(props) {
   );
 }
 
-export default Test;
+export default TaskBoard;

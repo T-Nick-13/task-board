@@ -5,6 +5,7 @@
   --standart-transition: all 0.3s linear;
   --content-width: 90%;
   --header-height: 50px;
+  --task-text-color: #8B8B8B;
 }
 
 .page {

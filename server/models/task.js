@@ -27,6 +27,15 @@ const taskSchema = new mongoose.Schema({
   },
   projectId: {
     type: String,
+  },
+  date: {
+    type: Date,
+  },
+  priority: {
+    type: String,
+  },
+  index: {
+    type: Number,
   }
 });
 

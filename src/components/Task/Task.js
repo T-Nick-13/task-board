@@ -15,8 +15,11 @@ function Task(props) {
     title: '',
     description: '',
     term: dayjs(),
-    status: 'Queue',
-    fileName: ''
+    status: props.taskStatus/*  ? props.taskStatus : 'Queue' */,
+    fileName: '',
+    priority: 'Medium',
+    time: 0,
+    index: 0
   })
 
   const projectId = useLocation().pathname.slice(1);
@@ -26,10 +29,14 @@ function Task(props) {
     clearInputs();
   }, [props.task]);
 
+  React.useEffect(() => {
+    clearInputs();
+  }, [props.taskStatus]);
+
   const activeTask = props.activeTask ? 'popup popup_active' : 'popup';
   const activeForm = props.activeTask ? 'popup__form popup__form_active' : 'popup__form';
-  const statusClass = (taskData.status === 'Development') ? 'task-list__status task-list__status_pending' :
-    (taskData.status === 'Done') ? 'task-list__status task-list__status_complete' : 'task-list__status';
+  const statusClass = (taskData.status === 'Development') ? 'popup__status popup__status_pending' :
+    (taskData.status === 'Done') ? 'popup__status popup__status_complete' : 'popup__status';
 
   /**Проверка загружаемого файла на ограничения по размеру*/
   function checkFileType(file) {
@@ -50,14 +57,21 @@ function Task(props) {
         term: props.task.term,
         status: props.task.status,
         file: props.task.file,
-        fileName: props.task.fileName
+        fileName: props.task.fileName,
+        priority: props.task.priority,
+        date: props.task.date,
+        time: dayjs().diff(props.task.date, 'hour'),
+        index: props.task.index
       })
     } else {
       setTaskData({
         title: '',
         description: '',
         term: dayjs(),
-        status: 'Queue',
+        status: props.taskStatus/*  ? props.taskStatus : 'Queue' */,
+        priority: 'Medium',
+        time: 0,
+        index: 0
       })
       setFileData('');
       setFileName('');
@@ -149,7 +163,7 @@ function Task(props) {
           </div>
 
           <div className="popup__info-container">
-            <input type="date" className="task__term task-list__term" id="term" name="term"
+            <input type="date" className="popup__term" id="term" name="term"
               value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange} />
 
             <select className={statusClass} onChange={handleChange}
@@ -158,6 +172,15 @@ function Task(props) {
               <option value="Development">Development</option>
               <option value="Done">Done</option>
             </select>
+
+            <select className="popup__status popup__priority" onChange={handleChange}
+              name="priority" value={taskData.priority}>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+
+            <div className="popup__time">в работе <span>{taskData.time}ч</span></div>
           </div>
         </div>
 

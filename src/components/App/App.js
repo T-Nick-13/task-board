@@ -9,8 +9,9 @@ import Task from '../Task/Task';
 import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
 import Project from '../Project/Project';
-import Test from '../TaskList/Test';
+import TaskBoard from '../TaskList/TaskBoard';
 import { v4 as uuidv4 } from 'uuid';
+import dayjs from 'dayjs';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
   const [projectList, setProjectList] = React.useState([]);
   const [project, setProject] = React.useState();
   const [task, setTask] = React.useState();
+  const [taskStatus, setTaskStatus] = React.useState();
   const [activePopupDel, setActivePopupDel] = React.useState(false);
 
   const api = new Api ({
@@ -37,6 +39,7 @@ function App() {
       setTaskList(JSON.parse(localStorage.getItem('tasks')));
       localStorage.setItem('projects', JSON.stringify(projects));
       setProjectList(JSON.parse(localStorage.getItem('projects')));
+      localStorage.setItem('newTasks', JSON.stringify(tasks));
     })
     .catch((err) => {
       console.log(err);
@@ -52,12 +55,20 @@ function App() {
     setActiveTask(false);
     setActivePopupDel(false);
     setActiveProject(false);
+    setTask();
+    setTaskStatus();
   }
 
   /**Открытие задачи по клику*/
   function openTask(task) {
     setActiveTask(true);
     setTask(task);
+  }
+
+  /**Открытие новой задачи по клику*/
+  function openNewTask(data) {
+    setActiveTask(true);
+    setTaskStatus(data);
   }
 
   /**Открытие попап для создания нового проекта*/
@@ -75,18 +86,25 @@ function App() {
   function createTask(taskData, fileData, fileLatName, task, projectId) {
 
     const data = new FormData();
+
     data.append('title', taskData.title);
     data.append('description', taskData.description);
     if (fileData) {
       data.append('fileData', fileData, fileLatName);
     }
-    data.append('term', taskData.term);
+    data.append('term', dayjs(taskData.term).startOf('day'));
     data.append('status', taskData.status);
     data.append('projectId', projectId);
+    data.append('priority', taskData.priority);
+    data.append('index', taskData.index);
+
     if (task) {
       data.append('id', task._id);
       data.append('file', task.file);
       data.append('fileName', task.fileName);
+    }
+    if (!task) {
+      data.append('date', dayjs());
     }
 
     if (task) {
@@ -187,6 +205,7 @@ function App() {
       })
     }
 
+
   function createProject(taskData, fileData, fileLatName, task) {
     const projectId = 'pr-' + (projectList.length + 1);
     const data = new FormData();
@@ -216,7 +235,6 @@ function App() {
         .catch((err) => {
           console.log(err)
         }) */
-        console.log('jj')
     } else {
       api.createProject(data)
         .then(() => {
@@ -234,7 +252,7 @@ function App() {
     <div className="page">
       <div className="page__container">
         <Header
-          openTask={openTask}
+          openNewTask={openNewTask}
           openProject={openProject}
         />
 
@@ -253,10 +271,11 @@ function App() {
           <Route
             path="/:id"
             element={
-              <Test
-                //taskList={taskList}
+              <TaskBoard
+                taskList={taskList}
                 editTaskOnBoard={editTaskOnBoard}
-                //getData={getData}
+                openTask={openTask}
+                openNewTask={openNewTask}
               />
             }
           />
@@ -274,6 +293,7 @@ function App() {
           onPopupClose={closePopup}
           onSubmit={createTask}
           task={task}
+          taskStatus={taskStatus}
         />
         <PopupDel
           activePopupDel={activePopupDel}

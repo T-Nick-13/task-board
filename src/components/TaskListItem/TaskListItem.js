@@ -75,7 +75,7 @@ function TaskListItem(props) {
       {/* <input type="date" className="task__term task-list__term" id="term" name="term"
         value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange}/> */}
 
-      <div className="task__term task-list__term">{dayjs(props.task.term).format('DD.MM.YY')}</div>
+      <div className="task__term popup__term">{dayjs(props.task.term).format('DD.MM.YY')}</div>
 
       {/* <select className={`${statusClass} task-list__status-list`} name="status" value={taskData.status} onChange={handleChange}>
         <option value="Ожидание">Ожидание</option>

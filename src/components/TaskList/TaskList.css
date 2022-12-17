@@ -18,7 +18,7 @@
 .task-list__container {
   display: flex;
   align-items: center;
-  width: 45%;
+  width: 70%;
   cursor: pointer;
   z-index: 1;
 }
@@ -65,54 +65,9 @@
 
 }
 
-.task-list__term {
+.task__term {
   background: #c2c2c26b;
-  border-radius: 7px;
-  padding: 3px;
-  font-size: 13px;
-  border: none;
-  outline: none;
-  box-sizing: border-box;
-  color: #535252;
-  transition: var(--standart-transition);
-}
-
-.task-list__term:hover {
-  opacity: 0.8;
-}
-
-.task-list__status {
-  background: #c2c2c2;
-  border-radius: 7px;
-  padding: 3px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  outline: none;
-  width: 105px;
-  box-sizing: border-box;
-  transition: var(--standart-transition);
-}
-
-.task-list__status:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.task-list__status option {
-  background: #fff;
-}
-
-.task-list__status_pending {
-  color: #665b1a;
-  background: #dfc83f;
-}
-
-.task-list__status_complete {
-  color: #0d3b14;
-  background: #4ab853;
+  width: auto;
 }
 
 .task-list__tools {
@@ -202,12 +157,12 @@
     font-size: 14px;
   }
 
-  /* .task-list__term {
+  /* .popup__term {
     font-size: 13px;
     width: 95px;
   }
 
-  .task-list__status {
+  .popup__status {
     font-size: 13px;
     width: 100px;
   } */
@@ -218,7 +173,7 @@
 }
 
 @media (max-width: 580px) {
-  .task-list__status-list {
+  .popup__status-list {
     display: none;
   }
 
