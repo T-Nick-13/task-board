@@ -1,0 +1,26 @@
+.subtask {
+  justify-content: flex-start;
+  margin-bottom: 9px;
+
+}
+
+.subtask:last-of-type {
+  margin: 0;
+}
+
+.subtask__btn {
+  border-color: var(--task-text-color);
+}
+
+.subtask__complete-logo {
+
+}
+
+.subtask__title {
+  margin: 0;
+  color: var(--task-main-font-color);
+  padding-bottom: 0;
+  border: none;
+}
+
+

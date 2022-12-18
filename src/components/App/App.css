@@ -6,6 +6,8 @@
   --content-width: 90%;
   --header-height: 50px;
   --task-text-color: #8B8B8B;
+  --task-background: #3c3c3c;
+  --task-main-font-color: #e4e4e4;
 }
 
 .page {

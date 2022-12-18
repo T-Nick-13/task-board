@@ -4,12 +4,12 @@ import Api from '../../utils/Api';
 import { MAIN_API } from '../../utils/config';
 
 import Header from '../Header/Header';
-import TaskList from '../TaskList/TaskList';
+import TaskList from '../TaskBoard/TaskList';
 import Task from '../Task/Task';
 import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
 import Project from '../Project/Project';
-import TaskBoard from '../TaskList/TaskBoard';
+import TaskBoard from '../TaskBoard/TaskBoard';
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
 

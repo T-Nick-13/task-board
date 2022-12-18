@@ -20,15 +20,6 @@
   font-weight: normal;
 }
 
-.header__btn {
-  display: flex;
-  align-items: center;
-  padding: 3px 5px;
-  background: #3c3c3c;
-  border-radius: 5px;
-  margin-left: 10px;
-  transition: var(--standart-transition);
-}
 
 .header__btn svg {
   transform: rotate(45deg);

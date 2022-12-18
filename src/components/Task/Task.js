@@ -1,9 +1,11 @@
 import React from 'react';
-import taskLogo from '../../images/icons8-список-задач-50.png';
-import desckLogo from '../../images/icons8-содержание-24.png';
-import uploadLogo from '../../images/icons8-загрузить-32.png';
+import taskLogo from '../../images/задача.svg';
+import desckLogo from '../../images/описание.svg';
+import uploadLogo from '../../images/загрузка.svg';
+import subTaskLogo from '../../images/icons8-древовидная-структура-48.png';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
+import SubTaskList from '../SubTaskList/SubTaskList';
 
 
 function Task(props) {
@@ -142,27 +144,21 @@ function Task(props) {
       <form className={activeForm} onSubmit={submitSave}>
         <div className="popup__container">
 
-          <label className="popup__label">Название задачи
+          <label className="popup__label popup__label-heading">Название задачи
             <img src={taskLogo} className="popup__img" alt="task"></img>
-            <input id="title" className="popup__input" name="title" type="text" onChange={handleChange}
+            <input id="title" className="popup__input popup__element" name="title" type="text" onChange={handleChange}
               value={taskData.title} minLength="2" maxLength="100" required/>
           </label>
 
-          <label className="popup__label popup__label_text">Описание
+          <label className="popup__label popup__label_text popup__label-heading">Описание
             <img src={desckLogo} className="popup__img" alt="description"></img>
-            <textarea id="description" className="popup__textarea" name="description" onChange={handleChange}
+            <textarea id="description" className="popup__textarea popup__element" name="description" onChange={handleChange}
               value={taskData.description} />
           </label>
 
-          <div className="popup__label">Вложение
-            <img src={uploadLogo} className="popup__img" alt="upload"></img>
-            <input className="popup__input-upload" id="popup__input" type="file" onChange={handleFileChange}/>
-            <label className="popup__label-upload" htmlFor="popup__input">Выберите файл</label>
-            <a className="popup__file-name" href={taskData.file} download>
-              {fileName !== '' ? fileName : taskData.fileName}</a>
-          </div>
 
-          <div className="popup__info-container">
+
+          <div className="popup__info-container popup__label-heading">
             <input type="date" className="popup__term" id="term" name="term"
               value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange} />
 
@@ -181,7 +177,34 @@ function Task(props) {
             </select>
 
             <div className="popup__time">в работе <span>{taskData.time}ч</span></div>
+
           </div>
+
+          <div className="popup__label popup__label-heading">Вложение
+            <img src={uploadLogo} className="popup__img" alt="upload"></img>
+            <input className="popup__input-upload" id="popup__input" type="file" onChange={handleFileChange}/>
+            <label className="popup__label-upload popup__element" htmlFor="popup__input">Выберите файл</label>
+            <a className="popup__file-name" href={taskData.file} download>
+              {fileName !== '' ? fileName : taskData.fileName}</a>
+          </div>
+
+          <div className="popup__label popup__label-heading">Подзадачи
+            <img src={subTaskLogo} className="popup__img popup__img_big" alt="subtask"></img>
+            <div className="popup__subtask-container popup__element">
+              <button className="btn-cross popup__subtask-btn" type="button" /* onClick={openPopup} */>
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="0" x2="100" y1="0" y2="100" />
+                  <line x1="0" x2="100" y1="100" y2="0" />
+                </svg>
+                <span>Добавить подзадачу</span>
+              </button>
+              <SubTaskList
+                task={props.task}
+              />
+            </div>
+
+          </div>
+
         </div>
 
         <button className="popup__close-btn btn-cross" type="button" onClick={closePopup}>
@@ -191,7 +214,7 @@ function Task(props) {
           </svg>
         </button>
 
-        <div className="popup__btn-container">
+        <div className="popup__btn-container popup__label-heading">
           <button className="popup__btn" type="submit">Сохранить</button>
           <button className="popup__btn" type="button" onClick={closePopup}>Отмена</button>
         </div>

@@ -17,7 +17,7 @@ function Header(props) {
     <header className="header">
       <div className="header__container">
         <h1 className="header__title"><Link to="/">Task-board</Link></h1>
-        <button className="header__btn btn-cross" type="button" onClick={openPopup}>
+        <button className="btn-cross header__btn" type="button" onClick={openPopup}>
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <line x1="0" x2="100" y1="0" y2="100" />
             <line x1="0" x2="100" y1="100" y2="0" />
