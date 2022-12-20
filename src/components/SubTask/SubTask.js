@@ -5,66 +5,51 @@ import completeLogo from '../../images/icons8-галочка-50.png';
 
 function SubTask(props) {
 
-  /* const [taskData, setTaskData] = React.useState({
-    term: props.task.term,
-    status: props.task.status
-  }) */
-
-  /**Обработка клика по задаче для ее открытия. Исключается клик по кнопке-выполнения*/
-  /* function openTask(e) {
-    if (!e.target.classList.contains('task-list__complete-logo')) {
-      props.onTaskClick(props.task);
-    }
-  } */
+  const [subTaskData, setSubTaskData] = React.useState({
+    title: props.subtask.title,
+    complete: props.subtask.complete
+  });
 
   /**Обработка изменений в форме редактирования задачи*/
-  /* function handleChange(e) {
-    const {name, value} = e.target;
-    setTaskData({
-      ...taskData,
-      [name]: value
+  function handleChange(e) {
+    const title = e.target.name === "title" ? e.target.value : subTaskData.title;
+    const complete = e.target.name === "complete" ? e.target.checked : subTaskData.complete;
+    setSubTaskData({
+      title,
+      complete
     });
-    props.editTaskField({ [name]: value }, props.task);
-  } */
-
-  /**Обработка клика по кнопке удаления для открытия попап подтверждения удаления*/
-  /* function openPopupDel() {
-    props.onDeleteClick(props.task);
-  } */
-
-  /**Обработка клика по кнопке выполнения задачи*/
- /*  function completeTask() {
-    props.onCompleteClick(props.task);
+    /* props.editSubTask({
+      title,
+      complete
+    }); */
   }
- */
+
   /**Обновление значений срока и статуса задачи при изменении списка задач*/
   /* React.useEffect(() => {
-    setTaskData({
-      term: props.task.term,
-      status: props.task.status
-    })
-  }, [props.taskList]) */
+    console.log(subTaskData)
+    props.editSubTask(subTaskData);
 
+  }, [subTaskData]) */
 
-  /* const completeClass = (props.task.status === 'Выполнено') ? 'task-list__complete-logo task-list__complete-logo_active' :
-    'task-list__complete-logo';
+  /* function test() {
+    console.log(subTaskData)
+    props.editSubTask(subTaskData);
+  } */
 
-    const titleClass = (props.task.status === 'Выполнено') ? 'task-list__title task-list__title_complete' :
-    'task-list__title' */;
+  const titleClass = subTaskData.complete ? ' subtask__title_complete' : '';
 
   return (
     <li className="task-list__item subtask" >
-      {/* <div className="subtask__container"> */}
+      <div>
+        <input className="subtask__checkbox" type="checkbox" id="complete" name="complete" onChange={handleChange}/>
+        <label className="subtask__label" htmlFor="complete"></label>
+      </div>
 
-        <button className="task-list__btn subtask__btn" title="выполнить" /* onClick={completeTask} */>
-          <img src={completeLogo} alt="complete" className="task-list__complete-logo subtask__complete-logo"></img>
-        </button>
 
-        {/* <h3 className="task-list__title  subtask__title">task1</h3> */}
-        <input id="title" className="popup__input task-list__title  subtask__title" name="title" type="text" /* onChange={handleChange} */
-              value="task1" minLength="2" maxLength="100" required/>
-      {/* </div> */}
-
+      {/* <input id="title" className={`popup__input task-list__title subtask__title${titleClass}`} name="title"
+        type="text" onChange={handleChange} value={subTaskData.title} minLength="2" maxLength="100"
+        required placeholder="Название задачи"/> */}
+      <h3 className={`popup__input task-list__title subtask__title${titleClass}`}>{subTaskData.title}</h3>
     </li>
   );
 }

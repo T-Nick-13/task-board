@@ -82,6 +82,37 @@ export default class Api {
     .then(this._checkServerResponse);
   }
 
+  getSubTasks() {
+    return fetch(`${this._url}/subtasks`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
+
+  createSubTask(data) {
+    return fetch(`${this._url}/subtasks`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
+
+  editSubTask(data) {
+    return fetch(`${this._url}/subtasks`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
+
 
 
 

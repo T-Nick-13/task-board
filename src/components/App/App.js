@@ -19,6 +19,7 @@ function App() {
   const [activeProject, setActiveProject] = React.useState(false);
   const [taskList, setTaskList] = React.useState([]);
   const [projectList, setProjectList] = React.useState([]);
+  const [subTaskList, setSubTaskList] = React.useState([]);
   const [project, setProject] = React.useState();
   const [task, setTask] = React.useState();
   const [taskStatus, setTaskStatus] = React.useState();
@@ -32,13 +33,16 @@ function App() {
   function getData() {
     Promise.all([
       api.getTasks(),
-      api.getProjects()
+      api.getProjects(),
+      api.getSubTasks(),
     ])
-    .then(([tasks, projects]) => {
+    .then(([tasks, projects, subtasks]) => {
       localStorage.setItem('tasks', JSON.stringify(tasks));
       setTaskList(JSON.parse(localStorage.getItem('tasks')));
       localStorage.setItem('projects', JSON.stringify(projects));
       setProjectList(JSON.parse(localStorage.getItem('projects')));
+      localStorage.setItem('subtasks', JSON.stringify(subtasks));
+      setSubTaskList(JSON.parse(localStorage.getItem('subtasks')));
       localStorage.setItem('newTasks', JSON.stringify(tasks));
     })
     .catch((err) => {
@@ -165,15 +169,17 @@ function App() {
   }, [])
 
   /**Выполнение задачи по клику на кнопку*/
-  function completeTask(task) {
+  function completeSubTask(task) {
     const type = task.status === 'Выполнено' ? 'В работе' : 'Выполнено';
-    api.editField({ status: type, term: task.term }, task._id)
+    console.log(type)
+    debugger
+    /* api.editField({ status: type, term: task.term }, task._id)
       .then(() => {
         getData();
       })
       .catch((err) => {
         console.log(err)
-      })
+      }) */
   }
 
   /**Редактирование задачи без ее открытия (через кнопке в общем списке задач)*/
@@ -245,7 +251,17 @@ function App() {
           console.log(err)
         })
     }
+  }
 
+  function createSubTask(data) {
+    api.createSubTask(data)
+      .then(() => {
+        //getData();
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -276,6 +292,7 @@ function App() {
                 editTaskOnBoard={editTaskOnBoard}
                 openTask={openTask}
                 openNewTask={openNewTask}
+                completeSubTask={completeSubTask}
               />
             }
           />
@@ -294,6 +311,8 @@ function App() {
           onSubmit={createTask}
           task={task}
           taskStatus={taskStatus}
+          createSubTask={createSubTask}
+          subTasks={subTaskList}
         />
         <PopupDel
           activePopupDel={activePopupDel}

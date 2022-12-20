@@ -5,7 +5,9 @@ import uploadLogo from '../../images/загрузка.svg';
 import subTaskLogo from '../../images/icons8-древовидная-структура-48.png';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
-import SubTaskList from '../SubTaskList/SubTaskList';
+import SubTask from '../SubTask/SubTask';
+import SubTaskForm from '../SubTaskForm/SubTaskForm';
+import { v4 as uuidv4 } from 'uuid';
 
 
 function Task(props) {
@@ -13,6 +15,13 @@ function Task(props) {
   const [fileName, setFileName] = React.useState('');
   const [fileLatName, setFileLatName] = React.useState('');
   const [fileData, setFileData] = React.useState('');
+  const [newSubTask, setNewSubTask] = React.useState({
+    title: '',
+    complete: false,
+    id: '',
+    taskId: ''
+  });
+  const [formActive, setFormActive] = React.useState(false);
   const [taskData, setTaskData] = React.useState({
     title: '',
     description: '',
@@ -22,13 +31,16 @@ function Task(props) {
     priority: 'Medium',
     time: 0,
     index: 0
-  })
+  });
 
+  const [subTasks, setSubTasks] = React.useState([]);
   const projectId = useLocation().pathname.slice(1);
+  const initSubTasks = props.task ? props.subTasks.filter((i) => i.taskId === props.task._id ) : [];
 
   /**Сброс заполненных и не сохраненных полей при изменении задачи*/
   React.useEffect(() => {
     clearInputs();
+    setSubTasks(initSubTasks);
   }, [props.task]);
 
   React.useEffect(() => {
@@ -39,6 +51,7 @@ function Task(props) {
   const activeForm = props.activeTask ? 'popup__form popup__form_active' : 'popup__form';
   const statusClass = (taskData.status === 'Development') ? 'popup__status popup__status_pending' :
     (taskData.status === 'Done') ? 'popup__status popup__status_complete' : 'popup__status';
+  const clasTest = formActive ? 'subtask-form_active' : 'subtask-form';
 
   /**Проверка загружаемого файла на ограничения по размеру*/
   function checkFileType(file) {
@@ -139,6 +152,52 @@ function Task(props) {
     return answer;
   }
 
+  function onSubTaskClick() {
+    setFormActive(true);
+    /* setSubTasks([
+      {
+        title: '',
+        complete: false
+      }, ...subTasks
+    ]) */
+  }
+
+  function editSubTask(data) {
+    setSubTasks([
+      ...subTasks.filter((i) => i.title !== ''), {
+        title: data.title,
+        complete: data.complete
+      }
+    ])
+    //debugger
+  }
+
+  function setSubTaskName(data) {
+    setNewSubTask({
+      title: data,
+      complete: false,
+      id: uuidv4(),
+      taskId: props.task._id
+    });
+  }
+
+  function createSubTask() {
+    setSubTasks([
+      ...subTasks, newSubTask
+    ]);
+    props.createSubTask(newSubTask);
+    closeSubTaskForm();
+  }
+
+  function closeSubTaskForm() {
+    setFormActive(false);
+    setNewSubTask({
+      title: '',
+      complete: false,
+      id: ''
+    });
+  }
+
   return (
     <div className={activeTask}>
       <form className={activeForm} onSubmit={submitSave}>
@@ -155,8 +214,6 @@ function Task(props) {
             <textarea id="description" className="popup__textarea popup__element" name="description" onChange={handleChange}
               value={taskData.description} />
           </label>
-
-
 
           <div className="popup__info-container popup__label-heading">
             <input type="date" className="popup__term" id="term" name="term"
@@ -191,16 +248,33 @@ function Task(props) {
           <div className="popup__label popup__label-heading">Подзадачи
             <img src={subTaskLogo} className="popup__img popup__img_big" alt="subtask"></img>
             <div className="popup__subtask-container popup__element">
-              <button className="btn-cross popup__subtask-btn" type="button" /* onClick={openPopup} */>
+              <button className="btn-cross popup__subtask-btn" type="button" onClick={onSubTaskClick}>
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                   <line x1="0" x2="100" y1="0" y2="100" />
                   <line x1="0" x2="100" y1="100" y2="0" />
                 </svg>
                 <span>Добавить подзадачу</span>
               </button>
-              <SubTaskList
-                task={props.task}
+
+              <SubTaskForm
+                onChange={setSubTaskName}
+                onSaveClick={createSubTask}
+                onCloseClick={closeSubTaskForm}
+                formActive={formActive}
+                newSubTask={newSubTask}
               />
+
+              <ul className="subtask-list">
+                {subTasks.map((i) => {
+                  return (
+                    <SubTask
+                      key={uuidv4()}
+                      subtask={i}
+                      editSubTask={editSubTask}
+                    />
+                  )
+                })}
+              </ul>
             </div>
 
           </div>

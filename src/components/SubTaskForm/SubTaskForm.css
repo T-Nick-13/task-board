@@ -1,0 +1,27 @@
+.subtask-form  {
+  display: none;
+}
+
+.subtask-form_active {
+  display: block;
+}
+
+.subtask-input {
+  background: #c2c2c2;
+  margin: 5px 0 8px;
+  border: none;
+  min-width: 240px;
+  border-radius: 5px;
+  min-height: 25px;
+}
+
+.subtask-btn {
+  background: #4a4a4a;
+  width: 91px;
+  font-size: 13px;
+  height: 25px;
+}
+
+.subtask-btn:first-of-type {
+  color: #dadada;
+}

@@ -1,35 +1,19 @@
 import React from 'react';
 import SubTask from '../SubTask/SubTask';
+import { v4 as uuidv4 } from 'uuid';
 
 function SubTaskList(props) {
 
 
   return (
     <ul className="subtask-list">
-      {/* {props.taskList.map((i) => {
+      {props.subTasks.map((i) => {
         return (
           <SubTask
-            onTaskClick={props.openTask}
-            title={i.title}
-            key={i._id}
-            task={i}
-            term={i.term}
-            status={i.status}
-            onDeleteClick={props.openPopupDel}
-            onCompleteClick={props.completeTask}
-            editTaskField={props.editTaskField}
-            taskList={props.taskList}
+            key={uuidv4()}
           />
-
-
         )
-      })} */}
-      <SubTask
-        task={props.task}
-      />
-      <SubTask
-        task={props.task}
-      />
+      })}
     </ul>
   );
 }

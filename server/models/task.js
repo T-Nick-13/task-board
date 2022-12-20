@@ -36,7 +36,18 @@ const taskSchema = new mongoose.Schema({
   },
   index: {
     type: Number,
-  }
+  },
+  subtasks: [{
+    title: {
+      type: String
+    },
+    complete: {
+      type: Boolean
+    },
+    id: {
+      type: String
+    },
+  }]
 });
 
 module.exports = mongoose.model('task', taskSchema);

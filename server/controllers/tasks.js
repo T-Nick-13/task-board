@@ -18,11 +18,11 @@ const createTask = (req, res) => {
   const { title, description, term, status, projectId, date, priority, index } = req.body;
   debugger
 
-  Task.create({ title, description, file, term, status, fileName, filePath, projectId, date, priority, index})
+  /* Task.create({ title, description, file, term, status, fileName, filePath, projectId, date, priority, index})
     .then((card) => res.send(card))
     .catch((err) => {
       throw err;
-  })
+  }) */
 }
 
 const deleteTask = (req, res, next) => {
