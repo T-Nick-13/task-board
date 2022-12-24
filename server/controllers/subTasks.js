@@ -23,12 +23,10 @@ const createSubTask = (req, res) => {
 }
 
 const editSubTask = (req, res, next) => {
-  const { title, completed } = req.body;
-  const { taskId } = req.params;
-
+  const { title, complete, id, taskId, _id } = req.body;
   SubTask.findByIdAndUpdate(
-    taskId,
-    { title, completed },
+    _id,
+    { title, complete, id, taskId },
     {
       new: true,
       runValidators: true,

@@ -1,0 +1,100 @@
+.subtask {
+  justify-content: flex-start;
+  margin-bottom: 9px;
+  align-items: baseline;
+}
+
+.subtask {
+  justify-content: flex-start;
+  margin-bottom: 9px;
+  align-items: baseline;
+}
+
+.subtask:last-of-type {
+  margin: 0;
+}
+
+.subtask__btn {
+  border-color: var(--task-text-color);
+}
+
+.subtask__complete-logo {
+
+}
+
+.subtask__title {
+  margin: 0;
+  color: var(--task-main-font-color);
+  padding-bottom: 0;
+  border: none;
+  transition: var(--standart-transition);
+  text-decoration: none;
+  cursor: pointer;
+  min-width: 50%;
+}
+
+.subtask__title:hover {
+  opacity: 0.6;
+}
+
+.subtask__checkbox {
+  display: none;
+}
+
+.subtask__label {
+  display: flex;
+  cursor: pointer;
+  transition: var(--standart-transition);
+  border: 1px solid;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  margin-right: 5px;
+  background-size: 0%;
+}
+
+.subtask__checkbox:checked + .subtask__label {
+  background: url(../../images/icons8-галочка-50.png);
+  background-size: 68%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.subtask__title_complete {
+  /* margin: 0;
+  color: var(--task-main-font-color);
+  padding-bottom: 0;
+  border: none; */
+  text-decoration: line-through;
+  color: var(--task-text-color);
+}
+
+.subtask__btn {
+  background: none;
+  border-color: #888888;
+  width: 19px;
+  height: 19px;
+}
+
+.subtask__img {
+  opacity: 0;
+  transition: var(--standart-transition);
+  cursor: pointer;
+  width: 75%;
+}
+
+.subtask__img:hover {
+  opacity: 1;
+}
+
+.subtask__img_active {
+  opacity: 1;
+}
+
+.subtask__title_inactive {
+  display: none;
+}
+
+
+

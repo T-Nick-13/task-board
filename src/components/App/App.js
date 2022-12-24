@@ -116,6 +116,7 @@ function App() {
         .then(() => {
           getData();
           closePopup();
+          debugger
         })
         .catch((err) => {
           console.log(err)
@@ -125,6 +126,7 @@ function App() {
         .then(() => {
           getData();
           closePopup();
+          debugger
         })
         .catch((err) => {
           console.log(err)
@@ -172,7 +174,6 @@ function App() {
   function completeSubTask(task) {
     const type = task.status === 'Выполнено' ? 'В работе' : 'Выполнено';
     console.log(type)
-    debugger
     /* api.editField({ status: type, term: task.term }, task._id)
       .then(() => {
         getData();
@@ -256,8 +257,19 @@ function App() {
   function createSubTask(data) {
     api.createSubTask(data)
       .then(() => {
-        //getData();
-        console.log(data)
+        getData();
+        //console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function editSubTask(data) {
+    api.editSubTask(data)
+      .then(() => {
+        getData();
+        //closePopup();
       })
       .catch((err) => {
         console.log(err)
@@ -313,6 +325,7 @@ function App() {
           taskStatus={taskStatus}
           createSubTask={createSubTask}
           subTasks={subTaskList}
+          editSubTask={editSubTask}
         />
         <PopupDel
           activePopupDel={activePopupDel}

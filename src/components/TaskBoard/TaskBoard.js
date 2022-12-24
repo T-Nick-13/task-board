@@ -141,7 +141,7 @@ function TaskBoard(props) {
                         }}
                         className="dnd__container"
                       >
-                        <button className="header__btn btn-cross dnd__btn" type="button" data-status={column.name} onClick={onNewTaskClick}>
+                        <button className="btn-cross dnd__btn" type="button" data-status={column.name} onClick={onNewTaskClick}>
                           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <line x1="0" x2="100" y1="0" y2="100" />
                             <line x1="0" x2="100" y1="100" y2="0" />

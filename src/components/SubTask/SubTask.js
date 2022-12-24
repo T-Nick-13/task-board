@@ -1,55 +1,70 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import SubTaskForm from '../SubTaskForm/SubTaskForm';
 
 import completeLogo from '../../images/icons8-галочка-50.png';
 
 function SubTask(props) {
 
-  const [subTaskData, setSubTaskData] = React.useState({
-    title: props.subtask.title,
-    complete: props.subtask.complete
-  });
+  const [checked, setChecked] = React.useState(false);
+  const [subTaskFormActive, setSubTaskFormActive] = React.useState(false);
+  const [newTitle, setNewTitle] = React.useState('');
 
-  /**Обработка изменений в форме редактирования задачи*/
-  function handleChange(e) {
-    const title = e.target.name === "title" ? e.target.value : subTaskData.title;
-    const complete = e.target.name === "complete" ? e.target.checked : subTaskData.complete;
-    setSubTaskData({
-      title,
-      complete
-    });
-    /* props.editSubTask({
-      title,
-      complete
-    }); */
+  /**Установка/снятия пометки о выполнении задачи*/
+  function handleComplete() {
+    setChecked(checked ? false : true);
+    props.subTask.complete = checked ? false : true;
+    props.completeSubTask(props.subTask);
   }
 
-  /**Обновление значений срока и статуса задачи при изменении списка задач*/
-  /* React.useEffect(() => {
-    console.log(subTaskData)
-    props.editSubTask(subTaskData);
+  /**Обработка изменения названия подзадачи*/
+  function handleChange(data) {
+    setNewTitle(data);
+  }
 
-  }, [subTaskData]) */
+  /**Обработка клика по кнопке сохранить подзадачу*/
+  function saveSubTask() {
+    props.subTask.title = newTitle;
+    props.onSaveClick(props.subTask);
+    closeForm();
+  }
 
-  /* function test() {
-    console.log(subTaskData)
-    props.editSubTask(subTaskData);
-  } */
+  /**Обработка клика по позадаче для изменения названия*/
+  function openEditForm() {
+    setSubTaskFormActive(true);
+    props.onSubTaskClick();
+  }
 
-  const titleClass = subTaskData.complete ? ' subtask__title_complete' : '';
+  /**Закрытие формы редактирования названия подзадачи*/
+  function closeForm() {
+    setSubTaskFormActive(false);
+  }
+
+  /**Закрытие формы редактирования подзадачи при создании новой подзадачи*/
+  React.useEffect(() => {
+    if(props.formActive) {
+      setSubTaskFormActive(false);
+    }
+  }, [props.formActive])
+
+  const titleClass = props.subTask.complete || checked ? ' subtask__title_complete' : '';
+  const titleFormClass = subTaskFormActive ? ' subtask__title_inactive' : '';
+  const completeClass = props.subTask.complete || checked ? ' subtask__img_active' : '';
 
   return (
     <li className="task-list__item subtask" >
-      <div>
-        <input className="subtask__checkbox" type="checkbox" id="complete" name="complete" onChange={handleChange}/>
-        <label className="subtask__label" htmlFor="complete"></label>
-      </div>
-
-
-      {/* <input id="title" className={`popup__input task-list__title subtask__title${titleClass}`} name="title"
-        type="text" onChange={handleChange} value={subTaskData.title} minLength="2" maxLength="100"
-        required placeholder="Название задачи"/> */}
-      <h3 className={`popup__input task-list__title subtask__title${titleClass}`}>{subTaskData.title}</h3>
+      <button className="task-list__btn subtask__btn" title="выполнить" onClick={handleComplete} type="button">
+        <img src={completeLogo} alt="complete" className={`subtask__img${completeClass}`}></img>
+      </button>
+      <h3 className={`popup__input task-list__title subtask__title${titleClass}${titleFormClass}`}
+        onClick={openEditForm} title="изменить">{props.subTask.title}</h3>
+      <SubTaskForm
+        onSaveClick={saveSubTask}
+        onCloseClick={closeForm}
+        subTaskFormActive={subTaskFormActive}
+        subTask={props.subTask.title}
+        onChange={handleChange}
+      />
     </li>
   );
 }
