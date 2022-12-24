@@ -3,10 +3,12 @@ import taskLogo from '../../images/задача.svg';
 import desckLogo from '../../images/описание.svg';
 import uploadLogo from '../../images/загрузка.svg';
 import subTaskLogo from '../../images/icons8-древовидная-структура-48.png';
+import commentLogo from '../../images/icons8-комментарии-48.png';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
 import SubTask from '../SubTask/SubTask';
 import SubTaskForm from '../SubTaskForm/SubTaskForm';
+import CommentList from '../CommentList/CommentList';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -297,6 +299,14 @@ function Task(props) {
               </ul>
             </div>
 
+          </div>
+
+          <div className="popup__label popup__label-heading">Комментарии
+            <img src={commentLogo} className="popup__img " alt="upload"></img>
+            <textarea id="description" className="popup__textarea popup__element" name="description" onChange={handleChange}
+              placeholder="Оставить комментарий..." />
+            <button className="popup__btn-comment" type="button">Отправить</button>
+            <CommentList />
           </div>
 
         </div>

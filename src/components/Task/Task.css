@@ -18,6 +18,7 @@
 .popup_active {
   visibility: visible;
   background-color: rgba(1, 1, 1, 0.7);
+  overflow: auto;
 }
 
 .popup__form {
@@ -27,10 +28,11 @@
   align-content: center;
   flex-direction: column;
   position: absolute;
-  top: 200%;
+  top: 0;
+  /* top: 200%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   transition: top 0.3s;
   background: #1e1e1eba;
   max-width: 700px;
@@ -41,8 +43,8 @@
 
 .popup__form_active {
   visibility: visible;
-  top: 50%;
-  max-height: 99vh;
+  /* top: 50%;
+  max-height: 99vh; */
   padding: 10px;
 }
 
@@ -329,6 +331,18 @@
 .popup__subtask-container::-webkit-scrollbar-thumb  {
   background-color: #1e1e1eba;
   border-radius: 5px;
+}
+
+.popup__btn-comment {
+  border-radius: 5px;
+  margin-top: 5px;
+  color: var(--task-text-color);
+  width: 105px;
+  height: 25px;
+  border: none;
+  background-color: rgb(60 60 60);
+  transition: var(--standart-transition);
+  font-size: 15px;
 }
 
 @media (max-width: 580px) {

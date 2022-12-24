@@ -2,11 +2,13 @@
 @import url(./components/App/App.css);
 @import url(./components/Task/Task.css);
 @import url(./components/TaskBoard/TaskBoard.css);
-@import url(./components/PopupDel/PopupDel.css);
+/* @import url(./components/PopupDel/PopupDel.css); */
 @import url(./components/ProjectList/ProjectList.css);
 @import url(./components/Project/Project.css);
 @import url(./components/SubTask/SubTask.css);
 @import url(./components/SubTaskForm/SubTaskForm.css);
 @import url(./components/Header/Header.css);
+@import url(./components/Сomment/Сomment.css);
+@import url(./components/CommentList/CommentList.css);
 
 
