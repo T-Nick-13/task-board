@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const taskRouter = require('./routes/tasks');
 const subTaskRouter = require('./routes/subTasks');
+const commentRouter = require('./routes/comments');
 const projectRouter = require('./routes/projects');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -23,8 +24,9 @@ app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
 
-app.use('/tasks', taskRouter);//??
+app.use('/tasks', taskRouter);
 app.use('/subtasks', subTaskRouter);
+app.use('/comments', commentRouter);
 app.use('/', projectRouter);
 
 app.listen(PORT, () => {

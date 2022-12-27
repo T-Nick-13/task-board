@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import SubTask from '../SubTask/SubTask';
 import SubTaskForm from '../SubTaskForm/SubTaskForm';
 import CommentList from '../CommentList/CommentList';
+import CommentForm from '../CommentForm/CommentForm';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -303,10 +304,15 @@ function Task(props) {
 
           <div className="popup__label popup__label-heading">Комментарии
             <img src={commentLogo} className="popup__img " alt="upload"></img>
-            <textarea id="description" className="popup__textarea popup__element" name="description" onChange={handleChange}
-              placeholder="Оставить комментарий..." />
-            <button className="popup__btn-comment" type="button">Отправить</button>
-            <CommentList />
+            <CommentForm
+              createComment={props.createComment}
+              task={props.task}
+            />
+            <CommentList
+              commentList={props.commentList}
+              createComment={props.createComment}
+              task={props.task}
+            />
           </div>
 
         </div>

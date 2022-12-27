@@ -113,8 +113,24 @@ export default class Api {
     .then(this._checkServerResponse);
   }
 
+  getComments() {
+    return fetch(`${this._url}/comments`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
 
-
-
+  createComment(data) {
+    return fetch(`${this._url}/comments`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(this._checkServerResponse);
+  }
 
 }

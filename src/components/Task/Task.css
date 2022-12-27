@@ -333,17 +333,6 @@
   border-radius: 5px;
 }
 
-.popup__btn-comment {
-  border-radius: 5px;
-  margin-top: 5px;
-  color: var(--task-text-color);
-  width: 105px;
-  height: 25px;
-  border: none;
-  background-color: rgb(60 60 60);
-  transition: var(--standart-transition);
-  font-size: 15px;
-}
 
 @media (max-width: 580px) {
   .popup__container {

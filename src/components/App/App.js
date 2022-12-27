@@ -20,6 +20,7 @@ function App() {
   const [taskList, setTaskList] = React.useState([]);
   const [projectList, setProjectList] = React.useState([]);
   const [subTaskList, setSubTaskList] = React.useState([]);
+  const [commentList, setCommentList] = React.useState([]);
   const [project, setProject] = React.useState();
   const [task, setTask] = React.useState();
   const [taskStatus, setTaskStatus] = React.useState();
@@ -35,8 +36,9 @@ function App() {
       api.getTasks(),
       api.getProjects(),
       api.getSubTasks(),
+      api.getComments()
     ])
-    .then(([tasks, projects, subtasks]) => {
+    .then(([tasks, projects, subtasks, comments]) => {
       localStorage.setItem('tasks', JSON.stringify(tasks));
       setTaskList(JSON.parse(localStorage.getItem('tasks')));
       localStorage.setItem('projects', JSON.stringify(projects));
@@ -44,6 +46,7 @@ function App() {
       localStorage.setItem('subtasks', JSON.stringify(subtasks));
       setSubTaskList(JSON.parse(localStorage.getItem('subtasks')));
       localStorage.setItem('newTasks', JSON.stringify(tasks));
+      setCommentList(comments);
     })
     .catch((err) => {
       console.log(err);
@@ -78,7 +81,6 @@ function App() {
   /**Открытие попап для создания нового проекта*/
   function openProject() {
     setActiveProject(true);
-
   }
 
   /**Открытие списка задач по проекту*/
@@ -276,6 +278,18 @@ function App() {
       })
   }
 
+  function createComment(data) {
+    api.createComment(data)
+      .then((comment) => {
+        //getData();
+        //console.log(data)
+        setCommentList([...commentList, comment]);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className="page">
       <div className="page__container">
@@ -326,6 +340,8 @@ function App() {
           createSubTask={createSubTask}
           subTasks={subTaskList}
           editSubTask={editSubTask}
+          createComment={createComment}
+          commentList={commentList}
         />
         <PopupDel
           activePopupDel={activePopupDel}

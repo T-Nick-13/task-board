@@ -1,5 +1,10 @@
 .comment {
   color: var(--task-main-font-color);
+  margin-bottom: 20px;
+}
+
+.comment:last-of-type {
+  margin-bottom: 0;
 }
 
 .comment__data {
@@ -30,7 +35,7 @@
   color: #000;
 }
 
-.comment__reply {
+.comment__btn {
   background: none;
   border: none;
   color: inherit;
@@ -44,11 +49,21 @@
   color: var(--task-text-color);
 }
 
-.comment__reply:hover {
+.comment__btn:hover {
   opacity: 0.7;
 }
 
+.comment__btn-view {
+  color: var(--link-color);
+  margin-left: 15px;
+  display: none;
+}
+
+.comment__btn-view_active {
+  display: initial;
+}
+
 .comment__text {
-  margin: 13px 0 13px;
+  margin: 10px 0 10px;
   font-size: 15px;
 }
