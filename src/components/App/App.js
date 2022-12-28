@@ -64,18 +64,21 @@ function App() {
     setActiveProject(false);
     setTask();
     setTaskStatus();
+    document.body.classList.remove('body_unscrolled');
   }
 
   /**Открытие задачи по клику*/
   function openTask(task) {
     setActiveTask(true);
     setTask(task);
+    document.body.classList.add('body_unscrolled');
   }
 
   /**Открытие новой задачи по клику*/
   function openNewTask(data) {
     setActiveTask(true);
     setTaskStatus(data);
+    document.body.classList.add('body_unscrolled');
   }
 
   /**Открытие попап для создания нового проекта*/

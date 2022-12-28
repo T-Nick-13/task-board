@@ -302,7 +302,7 @@ function Task(props) {
 
           </div>
 
-          <div className="popup__label popup__label-heading">Комментарии
+          <div className="popup__label">Комментарии
             <img src={commentLogo} className="popup__img " alt="upload"></img>
             <CommentForm
               createComment={props.createComment}
@@ -324,9 +324,11 @@ function Task(props) {
           </svg>
         </button>
 
-        <div className="popup__btn-container popup__label-heading">
+        <div className="popup__btn-container">
+          {/* <div> */}
           <button className="popup__btn" type="submit">Сохранить</button>
           <button className="popup__btn" type="button" onClick={closePopup}>Отмена</button>
+          {/* </div> */}
         </div>
       </form>
     </div>

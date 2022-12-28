@@ -1,6 +1,5 @@
 .popup {
-  visibility: hidden;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -10,14 +9,15 @@
   left: 0px;
   margin: 0;
   z-index: 1;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); */
   transition: background-color 0.3s;
+  animation: fadeIn 0.3s;
 }
 
 .popup_active {
-  visibility: visible;
-  background-color: rgba(1, 1, 1, 0.7);
+  display: flex;
+  background-color: rgba(1, 1, 1, 0.8);
   overflow: auto;
 }
 
@@ -29,23 +29,16 @@
   flex-direction: column;
   position: absolute;
   top: 0;
-  /* top: 200%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%); */
-  transition: top 0.3s;
-  background: #1e1e1eba;
+  background: #1e1e1ec2;
   max-width: 700px;
   min-height: 60%;
-  width: 90%;
+  width: 90vw;
   border-radius: 15px;
+  box-sizing: border-box;
 }
 
 .popup__form_active {
   visibility: visible;
-  /* top: 50%;
-  max-height: 99vh; */
-  padding: 10px;
 }
 
 .popup__btn {
@@ -53,7 +46,7 @@
   height: 30px;
   border-radius: 20px;
   border: none;
-  background-color: rgb(60 60 60);
+  background: #c2c2c2;
   color: var(--task-text-color);
   transition: var(--standart-transition);
   font-size: 15px;
@@ -61,7 +54,7 @@
 
 .popup__btn:first-of-type {
   margin-right: 5px;
-  color: #dadada;
+  color: #000;
 }
 
 .popup__btn:hover {
@@ -96,7 +89,6 @@
   margin: 35px 0 0 55px;
   align-items: baseline;
   flex-direction: column;
-  padding-right: 5px;
 }
 
 .popup__img {
@@ -228,7 +220,18 @@
 .popup__btn-container {
   display: flex;
   justify-content: center;
-  /* margin-bottom: 35px; */
+  position: fixed;
+  /* background: #21202087;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px); */
+  min-height: 55px;
+  bottom: 5px;
+  width: 90%;
+  max-width: 700px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
 }
 
 .popup__term:hover {
@@ -336,7 +339,7 @@
 
 @media (max-width: 580px) {
   .popup__container {
-    margin: 35px 8px 0 32px;
+    margin: 25px 0 0 0;
   }
 
   .popup__close-btn {
@@ -350,7 +353,22 @@
 
   .popup__form_active {
     width: 100%;
+    padding: 15px;
+    border-radius: 0;
   }
+
+  .popup__img {
+    display: none;
+  }
+
+  .popup__btn-container {
+    left: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 

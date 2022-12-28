@@ -24,4 +24,8 @@
 
 }
 
+.body_unscrolled{
+  overflow: hidden;
+}
+
 
