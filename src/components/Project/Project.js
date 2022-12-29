@@ -1,7 +1,7 @@
 import React from 'react';
-import taskLogo from '../../images/icons8-список-задач-50.png';
-import desckLogo from '../../images/icons8-содержание-24.png';
-import uploadLogo from '../../images/icons8-загрузить-32.png';
+import taskLogo from '../../images/задача.svg';
+import desckLogo from '../../images/описание.svg';
+import uploadLogo from '../../images/загрузка.svg';
 import dayjs from 'dayjs';
 
 
@@ -24,9 +24,9 @@ function Project(props) {
   }, [props.task]);
 
   const activeProject = props.activeProject ? 'popup popup_active' : 'popup';
-  const activeForm = props.activeProject ? 'popup__form popup__form_active' : 'popup__form';
-  const statusClass = (taskData.status === 'В работе') ? 'task-list__status task-list__status_pending' :
-    (taskData.status === 'Выполнено') ? 'task-list__status task-list__status_complete' : 'task-list__status';
+  const activeForm = props.activeProject ? 'popup__form popup__form-project popup__form_active' : 'popup__form';
+  const statusClass = (taskData.status === 'В работе') ? 'popup__status popup__status_pending' :
+    (taskData.status === 'Выполнено') ? 'popup__status popup__status_complete' : 'popup__status';
 
   /**Проверка загружаемого файла на ограничения по размеру*/
   function checkFileType(file) {
@@ -111,7 +111,7 @@ function Project(props) {
     };
 
     for (var i = 0; i < word.length; ++i ) {
-      if (converter[word[i]] == undefined){
+      if (converter[word[i]] === undefined){
         answer += word[i];
       } else {
         answer += converter[word[i]];
@@ -125,28 +125,20 @@ function Project(props) {
       <form className={activeForm} onSubmit={submitSave}>
         <div className="popup__container">
 
-          <label className="popup__label">Project title
+          <label className="popup__label popup__label-heading">Название проекта
             <img src={taskLogo} className="popup__img" alt="task"></img>
-            <input id="title" className="popup__input" name="title" type="text" onChange={handleChange}
+            <input id="title" className="popup__input popup__element" name="title" type="text" onChange={handleChange}
               value={taskData.title} minLength="2" maxLength="100" required/>
           </label>
 
-          <label className="popup__label popup__label_text">Description
+          <label className="popup__label popup__label_text popup__label-heading">Описание
             <img src={desckLogo} className="popup__img" alt="description"></img>
-            <textarea id="description" className="popup__textarea" name="description" onChange={handleChange}
+            <textarea id="description" className="popup__textarea popup__element" name="description" onChange={handleChange}
               value={taskData.description} />
           </label>
 
-          <div className="popup__label">Files
-            <img src={uploadLogo} className="popup__img" alt="upload"></img>
-            <input className="popup__input-upload" id="popup__input" type="file" onChange={handleFileChange}/>
-            <label className="popup__label-upload" htmlFor="popup__input">Select a file</label>
-            <a className="popup__file-name" href={taskData.file} download>
-              {fileName !== '' ? fileName : taskData.fileName}</a>
-          </div>
-
-          <div className="popup__info-container">
-            <input type="date" className="task__term task-list__term" id="term" name="term"
+          <div className="popup__info-container popup__label-heading">
+            <input type="date" className="popup__term" id="term" name="term"
               value={dayjs(taskData.term).format('YYYY-MM-DD')} onChange={handleChange} />
 
             <select className={statusClass} onChange={handleChange}
@@ -156,6 +148,16 @@ function Project(props) {
               <option value="Выполнено">Complete</option>
             </select>
           </div>
+
+          <div className="popup__label popup__label-heading">Вложение
+            <img src={uploadLogo} className="popup__img" alt="upload"></img>
+            <input className="popup__input-upload" id="popup__input" type="file" onChange={handleFileChange}/>
+            <label className="popup__label-upload popup__element" htmlFor="popup__input">Выбрать файл</label>
+            <a className="popup__file-name" href={taskData.file} download>
+              {fileName !== '' ? fileName : taskData.fileName}</a>
+          </div>
+
+
         </div>
 
         <button className="popup__close-btn btn-cross" type="button" onClick={closePopup}>
@@ -165,7 +167,7 @@ function Project(props) {
           </svg>
         </button>
 
-        <div className="popup__btn-container">
+        <div className="popup__btn-container popup__btn-container-project popup__label-heading">
           <button className="popup__btn" type="submit">Сохранить</button>
           <button className="popup__btn" type="button" onClick={closePopup}>Отмена</button>
         </div>

@@ -4,7 +4,6 @@ import Api from '../../utils/Api';
 import { MAIN_API } from '../../utils/config';
 
 import Header from '../Header/Header';
-import TaskList from '../TaskBoard/TaskList';
 import Task from '../Task/Task';
 import PopupDel from '../PopupDel/PopupDel';
 import ProjectList from '../ProjectList/ProjectList';
@@ -150,13 +149,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-
-  }
-
-  /**Открытие попап - подтверждение удаления задачи*/
-  function openPopupDel(task) {
-    setActivePopupDel(true);
-    setTask(task);
   }
 
   /**Закрытие модальных окон по кнопке Escape и клику по оверлей*/
@@ -176,29 +168,10 @@ function App() {
   }, [])
 
   /**Выполнение задачи по клику на кнопку*/
-  function completeSubTask(task) {
+  /* function completeSubTask(task) {
     const type = task.status === 'Выполнено' ? 'В работе' : 'Выполнено';
     console.log(type)
-    /* api.editField({ status: type, term: task.term }, task._id)
-      .then(() => {
-        getData();
-      })
-      .catch((err) => {
-        console.log(err)
-      }) */
-  }
-
-  /**Редактирование задачи без ее открытия (через кнопке в общем списке задач)*/
-  /* function editTaskField(taskData, task) {
-    const status = taskData.status === undefined ? task.status : taskData.status;
-    const term = taskData.term === undefined ? task.term : taskData.term;
-    let newObj = {};
-    newObj = {
-      status,
-      term
-    };
-
-    api.editField(newObj, task._id)
+    api.editField({ status: type, term: task.term }, task._id)
       .then(() => {
         getData();
       })
@@ -207,6 +180,7 @@ function App() {
       })
   } */
 
+  /**Сохранение нового состояние задачи на доске*/
   function editTaskOnBoard(data) {
     api.editTaskOnBoard(data)
       .then(() => {
@@ -217,7 +191,7 @@ function App() {
       })
     }
 
-
+  /**Создание нового проекта*/
   function createProject(taskData, fileData, fileLatName, task) {
     const projectId = 'pr-' + (projectList.length + 1);
     const data = new FormData();
@@ -259,17 +233,18 @@ function App() {
     }
   }
 
+  /**Создание поздадачи*/
   function createSubTask(data) {
     api.createSubTask(data)
       .then(() => {
         getData();
-        //console.log(data)
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
+  /**Изменение поздадачи*/
   function editSubTask(data) {
     api.editSubTask(data)
       .then(() => {
@@ -281,6 +256,7 @@ function App() {
       })
   }
 
+  /**Добавление комментария к задаче*/
   function createComment(data) {
     api.createComment(data)
       .then((comment) => {
@@ -309,6 +285,8 @@ function App() {
               <ProjectList
                 projects={projectList}
                 onProjectClick={openTaskBoard}
+                tasks={taskList}
+                openProject={openProject}
               />
             }
           />
@@ -321,19 +299,12 @@ function App() {
                 editTaskOnBoard={editTaskOnBoard}
                 openTask={openTask}
                 openNewTask={openNewTask}
-                completeSubTask={completeSubTask}
+                /* completeSubTask={completeSubTask} */
               />
             }
           />
 
         </Routes>
-        {/* <TaskList
-          openTask={openTask}
-          taskList={taskList}
-          openPopupDel={openPopupDel}
-          completeTask={completeTask}
-          editTaskField={editTaskField}
-        /> */}
         <Task
           activeTask={activeTask}
           onPopupClose={closePopup}
@@ -358,6 +329,7 @@ function App() {
           onPopupClose={closePopup}
           onSubmit={createProject}
           task={task}
+
 
         />
       </div>

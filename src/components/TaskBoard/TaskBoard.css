@@ -92,6 +92,7 @@
   margin-top: 70px;
   flex-wrap: wrap;
   justify-content: center;
+  animation: fadeIn 0.3s;
 }
 
 .dnd__container {

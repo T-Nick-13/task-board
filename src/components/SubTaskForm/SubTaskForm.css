@@ -29,8 +29,3 @@
 .subtask-btn:first-of-type {
   color: #dadada;
 }
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}

@@ -3,10 +3,10 @@ import { useLocation, Link } from 'react-router-dom';
 
 function Header(props) {
 
-  const title = useLocation().pathname === '/' ? 'New project' : 'New task';
+  const title = useLocation().pathname === '/' ? 'Добавить проект' : 'Добавить задачу';
 
   function openPopup() {
-    if (title === 'New project') {
+    if (title === 'Добавить проект') {
       props.openProject();
     } else {
       props.openNewTask();

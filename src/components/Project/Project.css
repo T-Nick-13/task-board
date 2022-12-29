@@ -1,0 +1,9 @@
+.popup__form-project {
+  position: relative;
+  min-height: 60%;
+}
+
+.popup__btn-container-project {
+  position: initial;
+  width: auto;
+}

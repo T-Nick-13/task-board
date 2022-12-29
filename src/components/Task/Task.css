@@ -9,8 +9,6 @@
   left: 0px;
   margin: 0;
   z-index: 1;
-  /* backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px); */
   transition: background-color 0.3s;
   animation: fadeIn 0.3s;
 }
@@ -31,7 +29,7 @@
   top: 0;
   background: #1e1e1ec2;
   max-width: 700px;
-  min-height: 60%;
+  min-height: 100%;
   width: 90vw;
   border-radius: 15px;
   box-sizing: border-box;
@@ -76,12 +74,10 @@
 .popup__label {
   display: flex;
   flex-direction: column;
-  /* line-height: 12px; */
   color: var(--task-text-color);;
   min-width: 80%;
   font-size: 16px;
   position: relative;
-  /* margin-bottom: 35px; */
 }
 
 .popup__container {
@@ -134,7 +130,6 @@
 }
 
 .popup__label-upload {
-  /* margin-top: 12px; */
   padding: 6px;
   display: flex;
   align-self: baseline;
@@ -221,9 +216,6 @@
   display: flex;
   justify-content: center;
   position: fixed;
-  /* background: #21202087;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px); */
   min-height: 55px;
   bottom: 5px;
   width: 90%;
