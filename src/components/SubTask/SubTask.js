@@ -6,13 +6,13 @@ import completeLogo from '../../images/icons8-галочка-50.png';
 
 function SubTask(props) {
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(props.subTask.complete);
   const [subTaskFormActive, setSubTaskFormActive] = React.useState(false);
   const [newTitle, setNewTitle] = React.useState('');
 
   /**Установка/снятия пометки о выполнении задачи*/
   function handleComplete() {
-    setChecked(checked ? false : true);
+    setChecked(props.subTask.complete ? false : true);
     props.subTask.complete = checked ? false : true;
     props.completeSubTask(props.subTask);
   }
@@ -47,9 +47,9 @@ function SubTask(props) {
     }
   }, [props.formActive])
 
-  const titleClass = props.subTask.complete || checked ? ' subtask__title_complete' : '';
+  const titleClass = checked ? ' subtask__title_complete' : '';
   const titleFormClass = subTaskFormActive ? ' subtask__title_inactive' : '';
-  const completeClass = props.subTask.complete || checked ? ' subtask__img_active' : '';
+  const completeClass = checked ? ' subtask__img_active' : '';
 
   return (
     <li className="task-list__item subtask" >

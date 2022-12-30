@@ -12,17 +12,16 @@ const getTasks = (req, res, next) => {
 }
 
 const createTask = (req, res) => {
-  const file = (req.files.length > 0) ? /*'https://api.todo.netitov.ru/' */'http://localhost:3005/' + 'files/' + req.files[0].filename : '';
+  const file = (req.files.length > 0) ? 'https://api.tboard.netitov.ru/' + 'files/' + req.files[0].filename : '';
   const fileName = (req.files.length > 0) ? req.files[0].originalname : '';
   const filePath = (req.files.length > 0) ? 'public/files/' + req.files[0].filename: '';
   const { title, description, term, status, projectId, date, priority, index } = req.body;
-  debugger
 
-  /* Task.create({ title, description, file, term, status, fileName, filePath, projectId, date, priority, index})
+  Task.create({ title, description, file, term, status, fileName, filePath, projectId, date, priority, index})
     .then((card) => res.send(card))
     .catch((err) => {
       throw err;
-  }) */
+  })
 }
 
 const deleteTask = (req, res, next) => {
@@ -54,7 +53,7 @@ const deleteTask = (req, res, next) => {
 
 const editTask = (req, res, next) => {
   const { title, description, term, status, id } = req.body;
-  const file = (req.files.length > 0) ? /*'https://api.todo.netitov.ru/' */'http://localhost:3005/' + 'files/' + req.files[0].filename : req.body.file;
+  const file = (req.files.length > 0) ? 'https://api.tboard.netitov.ru/' + 'files/' + req.files[0].filename : req.body.file;
   const fileName = (req.files.length > 0) ? req.files[0].originalname : req.body.fileName;
   const filePath = (req.files.length > 0) ? 'public/files' + req.files[0].filename: '';
 

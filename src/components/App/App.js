@@ -120,7 +120,6 @@ function App() {
         .then(() => {
           getData();
           closePopup();
-          debugger
         })
         .catch((err) => {
           console.log(err)
@@ -130,7 +129,6 @@ function App() {
         .then(() => {
           getData();
           closePopup();
-          debugger
         })
         .catch((err) => {
           console.log(err)
@@ -167,19 +165,6 @@ function App() {
     document.addEventListener('click', handleOverlayClose);
   }, [])
 
-  /**Выполнение задачи по клику на кнопку*/
-  /* function completeSubTask(task) {
-    const type = task.status === 'Выполнено' ? 'В работе' : 'Выполнено';
-    console.log(type)
-    api.editField({ status: type, term: task.term }, task._id)
-      .then(() => {
-        getData();
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  } */
-
   /**Сохранение нового состояние задачи на доске*/
   function editTaskOnBoard(data) {
     api.editTaskOnBoard(data)
@@ -193,7 +178,7 @@ function App() {
 
   /**Создание нового проекта*/
   function createProject(taskData, fileData, fileLatName, task) {
-    const projectId = 'pr-' + (projectList.length + 1);
+    //const projectId = 'pr-' + (projectList.length + 1);
     const data = new FormData();
 
     data.append('title', taskData.title);
@@ -212,25 +197,14 @@ function App() {
 
     data.append('projectId', uuidv4());
 
-    if (task) {
-      /* api.editTask(data)
-        .then(() => {
-          getData();
-          closePopup();
-        })
-        .catch((err) => {
-          console.log(err)
-        }) */
-    } else {
-      api.createProject(data)
-        .then(() => {
-          getData();
-          closePopup();
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+    api.createProject(data)
+      .then(() => {
+        getData();
+        closePopup();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   /**Создание поздадачи*/
@@ -248,7 +222,7 @@ function App() {
   function editSubTask(data) {
     api.editSubTask(data)
       .then(() => {
-        getData();
+        //getData();
         //closePopup();
       })
       .catch((err) => {
@@ -290,7 +264,6 @@ function App() {
               />
             }
           />
-
           <Route
             path="/:id"
             element={
@@ -299,7 +272,6 @@ function App() {
                 editTaskOnBoard={editTaskOnBoard}
                 openTask={openTask}
                 openNewTask={openNewTask}
-                /* completeSubTask={completeSubTask} */
               />
             }
           />
@@ -329,8 +301,6 @@ function App() {
           onPopupClose={closePopup}
           onSubmit={createProject}
           task={task}
-
-
         />
       </div>
     </div>

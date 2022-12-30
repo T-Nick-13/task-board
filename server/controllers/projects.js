@@ -12,7 +12,7 @@ const getProjects = (req, res, next) => {
 }
 
 const createProject = (req, res) => {
-  const file = (req.files.length > 0) ? /* 'https://api.todo.netitov.ru/' */ 'http://localhost:3005/' + 'files/' + req.files[0].filename : '';
+  const file = (req.files.length > 0) ? 'https://api.tboard.netitov.ru/' + 'files/' + req.files[0].filename : '';
   const fileName = (req.files.length > 0) ? req.files[0].originalname : '';
   const filePath = (req.files.length > 0) ? 'public/files/' + req.files[0].filename: '';
   const { title, description, term, status, projectId  } = req.body;
@@ -53,7 +53,7 @@ const deleteProject = (req, res, next) => {
 
 const editProject = (req, res, next) => {
   const { title, description, term, status, id } = req.body;
-  const file = (req.files.length > 0) ? /* 'https://api.todo.netitov.ru/' */ 'http://localhost:3005/' + 'files/' + req.files[0].filename : req.body.file;
+  const file = (req.files.length > 0) ? 'https://api.tboard.netitov.ru/' + 'files/' + req.files[0].filename : req.body.file;
   const fileName = (req.files.length > 0) ? req.files[0].originalname : req.body.fileName;
   const filePath = (req.files.length > 0) ? 'public/files' + req.files[0].filename: '';
 

@@ -75,9 +75,9 @@ function TaskBoard(props) {
     }
   };
 
-  /* React.useEffect(() => {
+  React.useEffect(() => {
     props.editTaskOnBoard(JSON.parse(localStorage.getItem('newTasks')));
-  }, []) */
+  }, [])
 
   React.useEffect(() => {
     const newTasks = JSON.parse(localStorage.getItem('newTasks')).filter((i) => i.projectId === project);
@@ -101,7 +101,6 @@ function TaskBoard(props) {
 
   React.useEffect(() => {
     presetTasks();
-
   }, [columns])
 
   function onTaskClick(task) {

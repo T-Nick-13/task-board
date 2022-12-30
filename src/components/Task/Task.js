@@ -31,7 +31,7 @@ function Task(props) {
     title: '',
     description: '',
     term: dayjs(),
-    status: props.taskStatus/*  ? props.taskStatus : 'Queue' */,
+    status: props.taskStatus ? props.taskStatus : 'Queue',
     fileName: '',
     priority: 'Medium',
     time: 0,
@@ -49,7 +49,6 @@ function Task(props) {
     setSubTasks(initSubTasks);
     //setTaskActive(false)
   }, [props.task]);
-
 
 
   React.useEffect(() => {
@@ -92,7 +91,7 @@ function Task(props) {
         title: '',
         description: '',
         term: dayjs(),
-        status: props.taskStatus/*  ? props.taskStatus : 'Queue' */,
+        status: props.taskStatus ? props.taskStatus : 'Queue',
         priority: 'Medium',
         time: 0,
         index: 0
@@ -133,7 +132,6 @@ function Task(props) {
     e.preventDefault();
     props.onSubmit(taskData, fileData, fileLatName, props.task, projectId);
     clearInputs();
-    debugger
   }
 
   /**Перевод названия файла в транслит для корректного сохранения на сервере*/

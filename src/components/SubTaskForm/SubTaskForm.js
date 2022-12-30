@@ -4,7 +4,7 @@ function SubTaskForm(props) {
 
   const [title, setTitle] = React.useState('');
 
-  /**Обработка изенения поле название задачи*/
+  /**Обработка изменения поле название задачи*/
   function setSubTaskName(e) {
     props.onChange(e.target.value);
     setTitle(e.target.value);
