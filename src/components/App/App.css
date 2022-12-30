@@ -1,3 +1,4 @@
+
 :root {
   --page-background: rgb(231 229 229);
   --header-font-color: #bdc1c6;
@@ -14,7 +15,7 @@
 .page {
   min-height: 100vh;
   background-color: var(--page-background);
-  font-family: 'Century Gothic', Arial, Helvetica, Sans-serif;
+  font-family: 'Century Gothic', 'Montserrat', Arial, Helvetica, Sans-serif;
   color: var(--page-font-color);
   display: flex;
   justify-content: center;
